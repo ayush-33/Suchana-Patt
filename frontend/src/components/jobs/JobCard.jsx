@@ -1,17 +1,21 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Bookmark, Calendar, Users, GraduationCap, Clock, Award, Building2, ArrowRight } from 'lucide-react';
+import { Bookmark, Calendar, Users, GraduationCap, Clock, Award, Building2, ArrowRight, Bell, BellRing } from 'lucide-react';
 import { useBookmarks } from '../../hooks/useBookmarks';
+import { useReminders } from '../../hooks/useReminders';
 import { Badge } from '../common/Badge';
 import { formatDate, formatVacancies } from '../../utils/formatters';
+import { getRecruitmentStatusInfo } from '../../utils/recruitmentStatusHelper';
 
 export function JobCard({ job }) {
   const navigate = useNavigate();
   const { isBookmarked, toggleBookmark } = useBookmarks();
+  const { hasReminder, toggleReminder } = useReminders();
 
   if (!job) return null;
 
   const bookmarked = isBookmarked(job.id);
+  const reminded = hasReminder(job.id);
   const detailUrl = `/jobs/${job.id}`;
 
   // Normalized values with neutral fallbacks
@@ -26,24 +30,10 @@ export function JobCard({ job }) {
   const jobTypeBadgeType = isPrivate ? 'private' : 'gov';
   const jobTypeText = isPrivate ? 'Private Job' : 'Government Job';
 
-  // Derived application status
-  const rawStatus = (job.status || 'open').toLowerCase();
-  let statusBadgeType = 'open';
-  let statusBadgeText = 'Apply Open';
-
-  if (rawStatus === 'upcoming') {
-    statusBadgeType = 'upcoming';
-    statusBadgeText = 'Upcoming';
-  } else if (rawStatus === 'closed') {
-    statusBadgeType = 'closed';
-    statusBadgeText = 'Closed';
-  } else if (rawStatus === 'open') {
-    statusBadgeType = 'open';
-    statusBadgeText = 'Apply Open';
-  } else {
-    statusBadgeType = 'open';
-    statusBadgeText = job.status;
-  }
+  // Centralized recruitment status and action resolution
+  const statusInfo = getRecruitmentStatusInfo(job);
+  const statusBadgeType = statusInfo.badgeType;
+  const statusBadgeText = statusInfo.statusText;
 
   // Handle clicking anywhere on the card surface
   const handleCardClick = (e) => {
@@ -71,27 +61,51 @@ export function JobCard({ job }) {
       />
 
       <div className="job-card-top-content">
-        {/* A. Card Header: Badges & Bookmark */}
+        {/* A. Card Header: Badges & Actions */}
         <div className="job-card-top-row">
           <div className="job-card-badges">
             <Badge type={jobTypeBadgeType} text={jobTypeText} />
             <Badge type={statusBadgeType} text={statusBadgeText} />
           </div>
 
-          <button
-            type="button"
-            className={`bookmark-btn ${bookmarked ? 'active' : ''}`}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              toggleBookmark(job);
-            }}
-            data-prevent-card-nav="true"
-            title={bookmarked ? 'Remove from Saved Jobs' : 'Save this Job'}
-            aria-label={bookmarked ? `Remove ${job.title} from Saved Jobs` : `Save ${job.title} to Bookmarks`}
-          >
-            <Bookmark size={15} fill={bookmarked ? 'currentColor' : 'none'} />
-          </button>
+          <div className="job-card-actions-group">
+            {statusInfo.isReminderRelevant && (
+              <button
+                type="button"
+                className={`reminder-btn ${reminded ? 'active' : ''}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  toggleReminder(job);
+                }}
+                data-prevent-card-nav="true"
+                title={reminded ? 'Saved to your reminders (click to remove)' : 'Save to your reminders'}
+                aria-label={reminded ? `Remove reminder for ${job.title}` : `Save reminder for ${job.title}`}
+              >
+                {reminded ? (
+                  <BellRing size={14} className="reminder-icon active" />
+                ) : (
+                  <Bell size={14} className="reminder-icon" />
+                )}
+                <span className="reminder-btn-text">{reminded ? 'Reminder Set' : 'Remind Me'}</span>
+              </button>
+            )}
+
+            <button
+              type="button"
+              className={`bookmark-btn ${bookmarked ? 'active' : ''}`}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleBookmark(job);
+              }}
+              data-prevent-card-nav="true"
+              title={bookmarked ? 'Remove from Saved Jobs' : 'Save this Job'}
+              aria-label={bookmarked ? `Remove ${job.title} from Saved Jobs` : `Save ${job.title} to Bookmarks`}
+            >
+              <Bookmark size={15} fill={bookmarked ? 'currentColor' : 'none'} />
+            </button>
+          </div>
         </div>
 
         {/* B. Job Information: Title & Organization */}
@@ -148,7 +162,11 @@ export function JobCard({ job }) {
           <div className="job-card-date">
             <Calendar size={13} className="footer-icon-deadline" />
             <span>
-              Last Date: <strong>{formatDate(job.lastDate, 'To be announced')}</strong>
+              {statusInfo.isUpcoming && statusInfo.startDateFormatted ? (
+                <>Opens: <strong>{statusInfo.startDateFormatted}</strong></>
+              ) : (
+                <>Last Date: <strong>{formatDate(job.lastDate, 'To be announced')}</strong></>
+              )}
             </span>
           </div>
 

@@ -17,7 +17,14 @@ export async function getAdmitCards(params = {}) {
   }
 
   if (status && status !== 'all') {
-    results = results.filter((item) => item.status.toLowerCase() === status.toLowerCase());
+    const s = status.toLowerCase();
+    results = results.filter((item) => {
+      const itemStatus = item.status.toLowerCase();
+      if (s === 'awaiting update' || s === 'not available') {
+        return itemStatus === 'awaiting update' || itemStatus === 'not available';
+      }
+      return itemStatus === s;
+    });
   }
 
   if (category && category !== 'all') {

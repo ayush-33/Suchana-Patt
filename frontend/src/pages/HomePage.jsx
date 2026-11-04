@@ -309,7 +309,7 @@ export function HomePage() {
                   <div className="mini-card-top">
                     <div className="mini-card-header">
                       <Badge type={adm.status === 'Open' ? 'open' : 'upcoming'} text={adm.status} />
-                      <span className="mini-card-meta-tag" style={{ color: '#0755d9' }}>
+                      <span className="mini-card-meta-tag mini-card-meta-tag-blue">
                         {adm.programCategory}
                       </span>
                     </div>
@@ -345,7 +345,7 @@ export function HomePage() {
                   <div className="mini-card-top">
                     <div className="mini-card-header">
                       <Badge type={sch.status === 'Open' ? 'open' : 'closed'} text={sch.status} />
-                      <span className="mini-card-meta-tag" style={{ color: '#15803d' }}>
+                      <span className="mini-card-meta-tag mini-card-meta-tag-green">
                         {sch.amountText}
                       </span>
                     </div>

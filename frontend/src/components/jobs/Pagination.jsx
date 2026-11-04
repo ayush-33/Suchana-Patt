@@ -58,7 +58,7 @@ export function Pagination({ currentPage, totalPages, totalItems, pageSize, onPa
             return (
               <span
                 key={`ellipsis-${idx}`}
-                style={{ padding: '0 6px', color: '#94a3b8', fontSize: 13, userSelect: 'none' }}
+                className="pagination-ellipsis"
               >
                 ...
               </span>

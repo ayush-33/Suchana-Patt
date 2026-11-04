@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { BookmarkProvider } from '../context/BookmarkContext';
 import { NotificationProvider } from '../context/NotificationContext';
+import { ReminderProvider } from '../context/ReminderContext';
+import { ThemeProvider } from '../context/ThemeContext';
+import { useTheme } from '../hooks/useTheme';
 import { useViewport } from '../hooks/useViewport';
 import { Header } from '../components/layout/Header';
 import { SecondaryNavigation } from '../components/layout/SecondaryNavigation';
@@ -12,10 +15,24 @@ import { AppRoutes } from './router';
 
 function AppLayout() {
   const { isMobile } = useViewport(768);
+  const { theme } = useTheme();
+
+  const activeDesktopTheme = !isMobile && theme === 'dark' ? 'dark' : 'light';
+
+  useEffect(() => {
+    if (!isMobile && theme === 'dark') {
+      document.body.classList.add('sp-dark-theme');
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.body.classList.remove('sp-dark-theme');
+      document.documentElement.removeAttribute('data-theme');
+    }
+  }, [isMobile, theme]);
 
   return (
     <div
       className={`app-container ${isMobile ? 'layout-mobile' : 'layout-desktop'}`}
+      data-theme={activeDesktopTheme}
       style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', width: '100%' }}
     >
       {isMobile ? (
@@ -48,7 +65,11 @@ export function App() {
     <BrowserRouter>
       <NotificationProvider>
         <BookmarkProvider>
-          <AppLayout />
+          <ReminderProvider>
+            <ThemeProvider>
+              <AppLayout />
+            </ThemeProvider>
+          </ReminderProvider>
         </BookmarkProvider>
       </NotificationProvider>
     </BrowserRouter>

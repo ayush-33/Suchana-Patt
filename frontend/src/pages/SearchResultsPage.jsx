@@ -411,7 +411,7 @@ export function SearchResultsPage() {
                     <span className="search-results-count-text">
                       Showing <strong>{searchData.startIndex}–{searchData.endIndex}</strong> of{' '}
                       <strong>{searchData.totalFiltered}</strong> results in{' '}
-                      <strong style={{ color: '#073b82' }}>{activeCategoryLabel}</strong>
+                      <strong className="search-active-cat-label">{activeCategoryLabel}</strong>
                     </span>
                   </div>
 
@@ -437,7 +437,7 @@ export function SearchResultsPage() {
                 {/* Empty State B: Query matched items in portal, but active filters eliminated all results */}
                 {searchData.totalFiltered === 0 ? (
                   <div className="search-empty-filters">
-                    <div className="search-empty-icon" style={{ backgroundColor: '#fef3c7', color: '#d97706' }}>
+                    <div className="search-empty-icon">
                       <SlidersHorizontal size={28} />
                     </div>
                     <h2 className="search-empty-title">No Matches for Selected Filters</h2>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import {
   Calendar,
@@ -16,21 +16,28 @@ import {
   HelpCircle,
   ChevronDown,
   ChevronUp,
-  Sparkles
+  Sparkles,
+  ChevronLeft,
+  ChevronRight,
+  Bell,
+  BellRing
 } from 'lucide-react';
 import { Breadcrumbs } from '../components/layout/Breadcrumbs';
 import { Badge } from '../components/common/Badge';
 import { EmptyState } from '../components/common/EmptyState';
 import { JobCard } from '../components/jobs/JobCard';
 import { useBookmarks } from '../hooks/useBookmarks';
+import { useReminders } from '../hooks/useReminders';
 import { useViewport } from '../hooks/useViewport';
 import { getJobById, getRelatedJobs } from '../services/jobsService';
 import { formatDate, formatVacancies, formatFee } from '../utils/formatters';
 import { shareNotification } from '../utils/shareHelper';
+import { getRecruitmentStatusInfo } from '../utils/recruitmentStatusHelper';
 
 export function JobDetailsPage() {
   const { jobId } = useParams();
   const { isBookmarked, toggleBookmark, showToast } = useBookmarks();
+  const { hasReminder, toggleReminder } = useReminders();
   const { isMobile } = useViewport(768);
 
   const [job, setJob] = useState(null);
@@ -39,6 +46,26 @@ export function JobDetailsPage() {
   const [activeTab, setActiveTab] = useState('overview');
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
   const [currentTimestamp] = useState(() => Date.now());
+
+  const tabsRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const checkScrollBounds = useCallback(() => {
+    const el = tabsRef.current;
+    if (!el) return;
+    const { scrollLeft, scrollWidth, clientWidth } = el;
+    setCanScrollLeft(scrollLeft > 4);
+    setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 4);
+  }, []);
+
+  const handleScrollTabs = (direction) => {
+    const el = tabsRef.current;
+    if (!el) return;
+    const scrollAmount = direction === 'left' ? -220 : 220;
+    el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    setTimeout(checkScrollBounds, 320);
+  };
 
   useEffect(() => {
     let isCancelled = false;
@@ -140,6 +167,41 @@ export function JobDetailsPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [job, availableSections, isMobile]);
 
+  // Synchronize horizontal scroll arrows and ensure active tab is in view
+  useEffect(() => {
+    const el = tabsRef.current;
+    if (!el) return;
+
+    checkScrollBounds();
+    const frameId = requestAnimationFrame(checkScrollBounds);
+    const timeoutId = setTimeout(checkScrollBounds, 300);
+
+    el.addEventListener('scroll', checkScrollBounds, { passive: true });
+    window.addEventListener('resize', checkScrollBounds, { passive: true });
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      clearTimeout(timeoutId);
+      el.removeEventListener('scroll', checkScrollBounds);
+      window.removeEventListener('resize', checkScrollBounds);
+    };
+  }, [checkScrollBounds, availableSections]);
+
+  useEffect(() => {
+    const el = tabsRef.current;
+    if (!el) return;
+
+    const activeBtn = el.querySelector(`.section-tab-btn[data-tab-id="${activeTab}"]`);
+    if (activeBtn) {
+      const containerRect = el.getBoundingClientRect();
+      const btnRect = activeBtn.getBoundingClientRect();
+      if (btnRect.left < containerRect.left || btnRect.right > containerRect.right) {
+        activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+      }
+    }
+    setTimeout(checkScrollBounds, 300);
+  }, [activeTab, checkScrollBounds]);
+
   const handleTabClick = (sectionId) => {
     setActiveTab(sectionId);
     const element = document.getElementById(sectionId);
@@ -176,6 +238,7 @@ export function JobDetailsPage() {
   }
 
   const bookmarked = isBookmarked(job.id);
+  const reminded = hasReminder(job.id);
 
   const handleShare = () => {
     shareNotification(job.title, window.location.href, showToast);
@@ -188,25 +251,10 @@ export function JobDetailsPage() {
     { label: job.title }
   ];
 
-  // Application status derivation
-  const rawStatus = (job.status || 'open').toLowerCase();
-  let statusBadgeType = 'open';
-  let statusBadgeText = 'Apply Open';
-
-  if (rawStatus === 'upcoming') {
-    statusBadgeType = 'upcoming';
-    statusBadgeText = 'Upcoming';
-  } else if (rawStatus === 'closed') {
-    statusBadgeType = 'closed';
-    statusBadgeText = 'Closed';
-  } else if (rawStatus === 'open') {
-    statusBadgeType = 'open';
-    statusBadgeText = 'Apply Open';
-  } else {
-    statusBadgeType = 'open';
-    statusBadgeText = job.status;
-  }
-
+  // Centralized recruitment status and action resolution
+  const statusInfo = getRecruitmentStatusInfo(job, currentTimestamp);
+  const statusBadgeType = statusInfo.badgeType;
+  const statusBadgeText = statusInfo.statusText;
   const isPrivate = (job.jobType || '').toLowerCase() === 'private';
 
   const qualText = Array.isArray(job.qualification) && job.qualification.length > 0
@@ -257,6 +305,19 @@ export function JobDetailsPage() {
         </div>
 
         <div className="job-header-actions">
+          {statusInfo.isReminderRelevant && (
+            <button
+              type="button"
+              className={`btn-header-action ${reminded ? 'active' : ''}`}
+              onClick={() => toggleReminder(job)}
+              title={reminded ? 'Saved to your reminders (click to remove)' : 'Save to your reminders'}
+              aria-label={reminded ? 'Remove reminder' : 'Save reminder'}
+            >
+              {reminded ? <BellRing size={15} /> : <Bell size={15} />}
+              <span>{reminded ? 'Reminder Set' : 'Remind Me'}</span>
+            </button>
+          )}
+
           <button
             type="button"
             className={`btn-header-action ${bookmarked ? 'active' : ''}`}
@@ -290,8 +351,8 @@ export function JobDetailsPage() {
 
       <div className="job-header-dates-strip">
         <span>Published: <strong>{formatDate(job.publishedAt)}</strong></span>
-        <span>Last Date: <strong style={{ color: '#dc2626' }}>{formatDate(job.lastDate)}</strong></span>
-        <span>Total Vacancies: <strong style={{ color: '#15803d' }}>{formatVacancies(job.vacancies)}</strong></span>
+        <span>Last Date: <strong className="job-header-deadline-val">{formatDate(job.lastDate)}</strong></span>
+        <span>Total Vacancies: <strong className="job-header-vacancies-val">{formatVacancies(job.vacancies)}</strong></span>
       </div>
     </div>
   );
@@ -299,21 +360,46 @@ export function JobDetailsPage() {
   // 2. Section Navigation Tabs
   const renderSectionNav = () => (
     <nav className="details-section-nav" aria-label="Recruitment detail sections">
-      <div className="details-section-tabs">
-        {availableSections.map((sec) => {
-          const Icon = sec.icon;
-          return (
-            <button
-              key={sec.id}
-              type="button"
-              className={`section-tab-btn ${activeTab === sec.id ? 'active' : ''}`}
-              onClick={() => handleTabClick(sec.id)}
-            >
-              <Icon size={14} />
-              <span>{sec.label}</span>
-            </button>
-          );
-        })}
+      <div className="details-section-nav-wrapper">
+        <button
+          type="button"
+          className={`details-nav-arrow arrow-left ${!canScrollLeft ? 'is-disabled' : ''}`}
+          onClick={() => handleScrollTabs('left')}
+          disabled={!canScrollLeft}
+          aria-label="Scroll section tabs left"
+          title="Scroll left"
+        >
+          <ChevronLeft size={16} />
+        </button>
+
+        <div className="details-section-tabs" ref={tabsRef}>
+          {availableSections.map((sec) => {
+            const Icon = sec.icon;
+            return (
+              <button
+                key={sec.id}
+                type="button"
+                data-tab-id={sec.id}
+                className={`section-tab-btn ${activeTab === sec.id ? 'active' : ''}`}
+                onClick={() => handleTabClick(sec.id)}
+              >
+                <Icon size={14} />
+                <span>{sec.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        <button
+          type="button"
+          className={`details-nav-arrow arrow-right ${!canScrollRight ? 'is-disabled' : ''}`}
+          onClick={() => handleScrollTabs('right')}
+          disabled={!canScrollRight}
+          aria-label="Scroll section tabs right"
+          title="Scroll right"
+        >
+          <ChevronRight size={16} />
+        </button>
       </div>
     </nav>
   );
@@ -475,20 +561,20 @@ export function JobDetailsPage() {
             {job.vacancyDetails && job.vacancyDetails.length > 0 ? (
               job.vacancyDetails.map((post, idx) => (
                 <tr key={idx}>
-                  <td style={{ fontWeight: 600, color: '#13213a' }}>{post.postName}</td>
-                  <td>{post.category || 'General'}</td>
-                  <td style={{ fontWeight: 700, color: '#15803d' }}>
+                  <td className="vacancy-post-name">{post.postName}</td>
+                  <td className="vacancy-post-category">{post.category || 'General'}</td>
+                  <td className="vacancy-post-vacancies">
                     {typeof post.vacancies === 'number' ? post.vacancies.toLocaleString('en-IN') : post.vacancies}
                   </td>
-                  <td style={{ fontSize: 12.5, color: '#475569' }}>{post.eligibility}</td>
+                  <td className="vacancy-post-eligibility">{post.eligibility}</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td style={{ fontWeight: 600 }}>{job.title}</td>
-                <td>Regular</td>
-                <td style={{ fontWeight: 700, color: '#15803d' }}>{formatVacancies(job.vacancies)}</td>
-                <td>{job.eligibility?.education || qualText}</td>
+                <td className="vacancy-post-name">{job.title}</td>
+                <td className="vacancy-post-category">Regular</td>
+                <td className="vacancy-post-vacancies">{formatVacancies(job.vacancies)}</td>
+                <td className="vacancy-post-eligibility">{job.eligibility?.education || qualText}</td>
               </tr>
             )}
           </tbody>
@@ -596,9 +682,9 @@ export function JobDetailsPage() {
             <tr>
               <td><strong>Apply Online Registration</strong></td>
               <td className="link-action-cell">
-                {job.links?.apply ? (
+                {statusInfo.hasApplyUrl && !statusInfo.isClosed ? (
                   <a
-                    href={job.links.apply}
+                    href={statusInfo.applyUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="link-btn-official"
@@ -606,8 +692,14 @@ export function JobDetailsPage() {
                     <span>Click Here</span>
                     <ExternalLink size={12} />
                   </a>
+                ) : statusInfo.isClosed ? (
+                  <span className="link-unavailable closed">Registration Closed</span>
+                ) : statusInfo.isUpcoming ? (
+                  <span className="link-unavailable upcoming">
+                    {statusInfo.startDateFormatted ? `Opens ${statusInfo.startDateFormatted}` : 'Opening Soon'}
+                  </span>
                 ) : (
-                  <span className="link-unavailable">Not Active</span>
+                  <span className="link-unavailable pending">Link Awaited</span>
                 )}
               </td>
             </tr>
@@ -615,9 +707,9 @@ export function JobDetailsPage() {
             <tr>
               <td><strong>Download Official Notification PDF</strong></td>
               <td className="link-action-cell">
-                {job.links?.notification ? (
+                {statusInfo.hasNotificationUrl ? (
                   <a
-                    href={job.links.notification}
+                    href={statusInfo.notificationUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="link-btn-official"
@@ -626,7 +718,7 @@ export function JobDetailsPage() {
                     <ExternalLink size={12} />
                   </a>
                 ) : (
-                  <span className="link-unavailable">To be released</span>
+                  <span className="link-unavailable">Brochure Awaited</span>
                 )}
               </td>
             </tr>
@@ -634,9 +726,9 @@ export function JobDetailsPage() {
             <tr>
               <td><strong>Official Website Portal</strong></td>
               <td className="link-action-cell">
-                {job.links?.officialWebsite ? (
+                {statusInfo.hasOfficialWebsite ? (
                   <a
-                    href={job.links.officialWebsite}
+                    href={statusInfo.officialWebsiteUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="link-btn-official"
@@ -645,7 +737,7 @@ export function JobDetailsPage() {
                     <ExternalLink size={12} />
                   </a>
                 ) : (
-                  <span className="link-unavailable">Unavailable</span>
+                  <span className="link-unavailable">Refer Circular</span>
                 )}
               </td>
             </tr>
@@ -703,48 +795,141 @@ export function JobDetailsPage() {
   );
 
   // 12. Application Deadline Panel (Primary Application Action)
-  const renderDeadlinePanel = () => (
-    <div className="sidebar-panel sidebar-deadline-panel">
-      <div className="sidebar-deadline-header">
-        <div className="sidebar-deadline-icon">
-          <Calendar size={18} />
-        </div>
-        <div>
-          <span className="sidebar-deadline-sub">Application Deadline</span>
-          <div className="sidebar-deadline-date">
-            {formatDate(job.lastDate)}
+  const renderDeadlinePanel = () => {
+    let headerSub = 'Application Deadline';
+    let headerDate = formatDate(job.lastDate);
+    let countdownBadgeText = deadlineInfo.text;
+
+    if (statusInfo.isClosed) {
+      headerSub = 'Application Window';
+      headerDate = statusInfo.lastDateFormatted ? `Closed ${statusInfo.lastDateFormatted}` : 'Application Closed';
+      countdownBadgeText = 'Registration Closed';
+    } else if (statusInfo.isUpcoming) {
+      if (statusInfo.startDateFormatted) {
+        headerSub = 'Application Opens';
+        headerDate = `Opens ${statusInfo.startDateFormatted}`;
+        countdownBadgeText = `Opens on ${statusInfo.startDateFormatted}`;
+      } else {
+        headerSub = 'Application Schedule';
+        headerDate = 'Opening Date Not Announced';
+        countdownBadgeText = 'Schedule Pending';
+      }
+    } else if (!statusInfo.hasApplyUrl) {
+      headerSub = 'Application Status';
+      headerDate = statusInfo.lastDateFormatted ? `Last Date ${statusInfo.lastDateFormatted}` : 'Link Awaited';
+      countdownBadgeText = deadlineInfo.text || 'Registration Open';
+    }
+
+    return (
+      <div className="sidebar-panel sidebar-deadline-panel">
+        <div className="sidebar-deadline-header">
+          <div className="sidebar-deadline-icon">
+            <Calendar size={18} />
+          </div>
+          <div>
+            <span className="sidebar-deadline-sub">{headerSub}</span>
+            <div className="sidebar-deadline-date">{headerDate}</div>
           </div>
         </div>
-      </div>
 
-      <div className="sidebar-deadline-meta">
-        <Badge type={statusBadgeType} text={statusBadgeText} />
-        <span className={`sidebar-countdown-badge ${deadlineInfo.isClosed ? 'closed' : deadlineInfo.isUrgent ? 'urgent' : ''}`}>
-          {deadlineInfo.text}
-        </span>
-      </div>
+        <div className="sidebar-deadline-meta">
+          <Badge type={statusBadgeType} text={statusBadgeText} />
+          <span className={`sidebar-countdown-badge ${statusInfo.isClosed ? 'closed' : deadlineInfo.isUrgent ? 'urgent' : ''}`}>
+            {countdownBadgeText}
+          </span>
+        </div>
 
-      {job.links?.apply && !deadlineInfo.isClosed ? (
-        <a
-          href={job.links.apply}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-sidebar-apply"
-        >
-          <span>Apply Online Now</span>
-          <ExternalLink size={15} />
-        </a>
-      ) : (
-        <button
-          type="button"
-          className="btn-sidebar-apply disabled"
-          disabled
-        >
-          <span>{deadlineInfo.isClosed ? 'Application Closed' : 'Apply Link Soon'}</span>
-        </button>
-      )}
-    </div>
-  );
+        {statusInfo.isOpen && statusInfo.hasApplyUrl ? (
+          <div className="sidebar-apply-stack">
+            <a
+              href={statusInfo.applyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-sidebar-apply"
+            >
+              <span>Apply Online Now</span>
+              <ExternalLink size={15} />
+            </a>
+
+            {statusInfo.hasNotificationUrl && (
+              <a
+                href={statusInfo.notificationUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-sidebar-brochure"
+              >
+                <FileText size={14} />
+                <span>Official Notification PDF</span>
+                <ExternalLink size={12} />
+              </a>
+            )}
+          </div>
+        ) : (
+          <div className="sidebar-apply-stack">
+            {statusInfo.isClosed ? (
+              <>
+                <button type="button" disabled className="btn-sidebar-apply disabled" aria-disabled="true">
+                  <span>Applications Closed</span>
+                </button>
+                <div className="sidebar-status-banner closed">
+                  <span className="status-banner-title">Application Window Closed</span>
+                  <span className="status-banner-desc">
+                    {statusInfo.lastDateFormatted
+                      ? `Online registration closed on ${statusInfo.lastDateFormatted}. Official notifications and subsequent exam updates remain accessible below.`
+                      : 'Application deadline has passed.'}
+                  </span>
+                </div>
+              </>
+            ) : statusInfo.isUpcoming ? (
+              <div className="sidebar-status-banner upcoming">
+                <span className="status-banner-title">
+                  {statusInfo.startDateFormatted
+                    ? `Application Opens ${statusInfo.startDateFormatted}`
+                    : 'Opening Date Not Announced'}
+                </span>
+                <span className="status-banner-desc">
+                  {statusInfo.statusExplanation}
+                </span>
+              </div>
+            ) : (
+              <div className="sidebar-status-banner pending">
+                <span className="status-banner-title">Official Link Not Released Yet</span>
+                <span className="status-banner-desc">
+                  Official application link not yet released by the conducting authority. Save this notice or check the brochure.
+                </span>
+              </div>
+            )}
+
+            {statusInfo.isReminderRelevant && (
+              <button
+                type="button"
+                className={`btn-sidebar-reminder ${reminded ? 'active' : ''}`}
+                onClick={() => toggleReminder(job)}
+                title={reminded ? 'Saved to your reminders. Click to remove.' : 'Save to your reminders'}
+                aria-label={reminded ? `Remove reminder for ${job.title}` : `Save reminder for ${job.title}`}
+              >
+                {reminded ? <BellRing size={16} /> : <Bell size={16} />}
+                <span>{reminded ? 'Reminder Set' : statusInfo.isUpcoming ? 'Notify Me When Applications Open' : 'Remind Me When Link Opens'}</span>
+              </button>
+            )}
+
+            {statusInfo.hasNotificationUrl && (
+              <a
+                href={statusInfo.notificationUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-sidebar-brochure"
+              >
+                <FileText size={14} />
+                <span>Official Notification PDF</span>
+                <ExternalLink size={12} />
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   // 13. At a Glance Summary Card
   const renderAtAGlance = () => (
@@ -761,7 +946,7 @@ export function JobDetailsPage() {
 
         <div className="at-a-glance-item">
           <span className="glance-label">Total Vacancies</span>
-          <span className="glance-value" style={{ color: '#15803d', fontWeight: 800 }}>
+          <span className="glance-value glance-value-vacancies">
             {formatVacancies(job.vacancies)}
           </span>
         </div>
@@ -883,7 +1068,7 @@ export function JobDetailsPage() {
             </h4>
             <div className="related-job-meta">
               <span>{relJob.category}</span>
-              <span style={{ color: '#dc2626', fontWeight: 600 }}>
+              <span className="related-job-deadline-val">
                 Last: {formatDate(relJob.lastDate)}
               </span>
             </div>
@@ -896,24 +1081,16 @@ export function JobDetailsPage() {
   // 16. Job Updates Tracker Card
   const renderUpdatesTracker = () => (
     <div className="sidebar-panel job-updates-tracker-card">
-      <h3 className="sidebar-panel-title" style={{ color: '#073b82' }}>
-        <Bookmark size={16} color="#0755d9" />
+      <h3 className="sidebar-panel-title updates-tracker-title">
+        <Bookmark size={16} className="updates-tracker-icon" />
         <span>Job Updates Tracker</span>
       </h3>
-      <p style={{ fontSize: 12.5, color: '#475569', lineHeight: 1.5, marginBottom: 14 }}>
+      <p className="updates-tracker-desc">
         Bookmark this notification to your local dashboard to track deadlines, admit card releases, and result updates.
       </p>
       <button
         type="button"
-        className="btn-header-action"
-        style={{
-          width: '100%',
-          justifyContent: 'center',
-          backgroundColor: bookmarked ? '#fef08a' : '#0755d9',
-          color: bookmarked ? '#ca8a04' : '#ffffff',
-          borderColor: bookmarked ? '#facc15' : '#0755d9',
-          padding: '9px 14px'
-        }}
+        className={`btn-header-action btn-updates-tracker ${bookmarked ? 'active' : ''}`}
         onClick={() => toggleBookmark(job)}
         aria-label={bookmarked ? 'Saved in Bookmarks' : 'Save to My Bookmarks'}
       >

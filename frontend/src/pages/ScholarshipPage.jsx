@@ -105,7 +105,7 @@ export function ScholarshipPage() {
               <div key={sch.id} className="details-panel scholarship-card-item">
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
                   <Badge type={sch.status === 'Open' ? 'open' : 'closed'} text={sch.status} />
-                  <span style={{ fontSize: 12, fontWeight: 700, color: '#15803d' }}>
+                  <span className="scholarship-amount-text">
                     {sch.amountText}
                   </span>
                 </div>
@@ -128,9 +128,11 @@ export function ScholarshipPage() {
                   <div style={{ marginTop: 4 }}><strong>Income & Eligibility:</strong> {sch.eligibilityCriteria}</div>
                 </div>
 
+                <div className="card-flex-spacer" />
+
                 <div className="scholarship-card-footer listing-card-footer">
                   <span className="scholarship-last-date">
-                    Last Date: <strong style={{ color: '#dc2626' }}>{formatDate(sch.lastDate)}</strong>
+                    Last Date: <strong className="scholarship-last-date-val">{formatDate(sch.lastDate)}</strong>
                   </span>
 
                   {sch.officialPortalUrl && (

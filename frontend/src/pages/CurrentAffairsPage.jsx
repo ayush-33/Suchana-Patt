@@ -12,7 +12,7 @@ export function CurrentAffairsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
-  const [expandedId, setExpandedId] = useState(null);
+  const [expandedIds, setExpandedIds] = useState(() => new Set());
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -38,7 +38,15 @@ export function CurrentAffairsPage() {
   }, [search, categoryFilter, currentPage]);
 
   const toggleExpand = (id) => {
-    setExpandedId((prev) => (prev === id ? null : id));
+    setExpandedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
   };
 
   const breadcrumbs = [{ label: 'Current Affairs', to: '/current-affairs' }];
@@ -107,14 +115,15 @@ export function CurrentAffairsPage() {
         <>
           <div className="two-card-listing-grid">
             {articles.map((art) => {
-              const isExpanded = expandedId === art.id;
+              const isExpanded = expandedIds.has(art.id);
+              const analysisPanelId = `ca-analysis-${art.id}`;
               return (
-                <article key={art.id} className="details-panel current-affairs-card-item">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
-                    <span style={{ fontSize: 12, fontWeight: 700, color: '#0755d9', backgroundColor: '#eaf2ff', padding: '3px 8px', borderRadius: 4 }}>
+                <article key={art.id} className={`details-panel current-affairs-card-item ${isExpanded ? 'is-expanded' : ''}`}>
+                  <div className="current-affairs-card-header">
+                    <span className="current-affairs-category-badge">
                       {art.category}
                     </span>
-                    <span style={{ fontSize: 12, color: '#64748b', display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <span className="current-affairs-date-meta">
                       <Calendar size={13} />
                       <span>{art.dateText}</span>
                     </span>
@@ -129,10 +138,15 @@ export function CurrentAffairsPage() {
                   </p>
 
                   {isExpanded && (
-                    <div className="current-affairs-expanded-box">
-                      {art.fullText}
+                    <div className="current-affairs-expanded-box" id={analysisPanelId} role="region" aria-label={`Full analysis for ${art.title}`}>
+                      <div className="current-affairs-expanded-header">
+                        Key Insights & Detailed Analysis
+                      </div>
+                      <p className="current-affairs-expanded-text">{art.fullText}</p>
                     </div>
                   )}
+
+                  <div className="card-flex-spacer" />
 
                   <div className="current-affairs-card-footer">
                     <div className="current-affairs-tags-list">
@@ -148,6 +162,7 @@ export function CurrentAffairsPage() {
                       onClick={() => toggleExpand(art.id)}
                       className="current-affairs-expand-btn"
                       aria-expanded={isExpanded}
+                      aria-controls={analysisPanelId}
                     >
                       <span>{isExpanded ? 'Read Less' : 'Read Full Analysis'}</span>
                       {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}

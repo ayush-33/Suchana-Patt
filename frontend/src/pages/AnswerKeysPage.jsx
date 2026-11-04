@@ -107,7 +107,7 @@ export function AnswerKeysPage() {
                     type={ak.status.includes('Open') ? 'upcoming' : 'open'}
                     text={ak.status}
                   />
-                  <span style={{ fontSize: 12, color: '#64748b', fontWeight: 600 }}>{ak.category}</span>
+                  <span className="answer-key-category-tag">{ak.category}</span>
                 </div>
 
                 <h3 className="answer-key-card-title">
@@ -127,7 +127,7 @@ export function AnswerKeysPage() {
                   <div><strong>Released On:</strong> {ak.releaseDateText}</div>
                   <div style={{ marginTop: 4 }}>
                     <strong>Objection Window:</strong>{' '}
-                    <span style={{ color: ak.objectionLastDate === 'Closed' ? '#64748b' : '#dc2626', fontWeight: 600 }}>
+                    <span className={`objection-window-val ${ak.objectionLastDate === 'Closed' ? 'closed' : 'open'}`}>
                       {ak.objectionLastDate}
                     </span>
                   </div>
@@ -135,6 +135,8 @@ export function AnswerKeysPage() {
                     <div style={{ marginTop: 4 }}><strong>Objection Fee:</strong> {ak.feePerQuestion}</div>
                   )}
                 </div>
+
+                <div className="card-flex-spacer" />
 
                 <div className="answer-key-card-footer listing-card-footer">
                   {ak.downloadUrl && (

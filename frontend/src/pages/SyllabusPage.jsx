@@ -5,6 +5,77 @@ import { Pagination } from '../components/jobs/Pagination';
 import { EmptyState } from '../components/common/EmptyState';
 import { getSyllabus } from '../services/syllabusService';
 
+function SyllabusCard({ syl }) {
+  const [expanded, setExpanded] = useState(false);
+  const sections = syl.sections || [];
+  const maxInitial = 3;
+  const hasMore = sections.length > maxInitial;
+  const visibleSections = expanded || !hasMore ? sections : sections.slice(0, maxInitial);
+
+  return (
+    <div className="details-panel syllabus-card-item">
+      <div className="syllabus-card-header">
+        <span className="syllabus-category-badge">{syl.category}</span>
+        <span className="syllabus-file-size">{syl.fileSize}</span>
+      </div>
+
+      <h3 className="syllabus-card-title">{syl.examName}</h3>
+
+      <div className="syllabus-card-org">
+        <Building size={14} className="syllabus-org-icon" />
+        <span>{syl.organization} • {syl.examLevel}</span>
+      </div>
+
+      <p className="syllabus-card-desc">{syl.summary}</p>
+
+      {sections.length > 0 && (
+        <div className="syllabus-modules-box syllabus-meta-box">
+          <div className="syllabus-modules-heading">
+            Key Modules Covered:
+          </div>
+          <ul className="syllabus-modules-list">
+            {visibleSections.map((sec, idx) => (
+              <li key={idx} className="syllabus-module-item">
+                <CheckCircle2 size={13} className="syllabus-module-icon" />
+                <span className="syllabus-module-text">{sec}</span>
+              </li>
+            ))}
+          </ul>
+          {hasMore && (
+            <button
+              type="button"
+              className="syllabus-expand-btn"
+              onClick={() => setExpanded(!expanded)}
+              aria-expanded={expanded}
+            >
+              {expanded ? 'Show Less Modules' : `+ ${sections.length - maxInitial} More Modules`}
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* Flexible content spacer ensures equal row height when no sections are present */}
+      {sections.length === 0 && <div className="card-flex-spacer" />}
+
+      <div className="syllabus-card-footer listing-card-footer">
+        {syl.syllabusUrl ? (
+          <a
+            href={syl.syllabusUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-view-details syllabus-action-btn"
+          >
+            <Download size={13} />
+            <span>Download Official Syllabus PDF</span>
+          </a>
+        ) : (
+          <span className="syllabus-unavailable-btn">Official PDF Not Available</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export function SyllabusPage() {
   const [syllabusList, setSyllabusList] = useState([]);
   const [total, setTotal] = useState(0);
@@ -102,57 +173,7 @@ export function SyllabusPage() {
         <>
           <div className="two-card-listing-grid">
             {syllabusList.map((syl) => (
-              <div key={syl.id} className="details-panel syllabus-card-item">
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: '#0755d9', backgroundColor: '#eaf2ff', padding: '3px 8px', borderRadius: 4 }}>
-                    {syl.category}
-                  </span>
-                  <span style={{ fontSize: 12, color: '#64748b', fontWeight: 600 }}>{syl.fileSize}</span>
-                </div>
-
-                <h3 className="syllabus-card-title">
-                  {syl.examName}
-                </h3>
-
-                <div className="syllabus-card-org">
-                  <Building size={14} />
-                  <span>{syl.organization} • {syl.examLevel}</span>
-                </div>
-
-                <p className="syllabus-card-desc">
-                  {syl.summary}
-                </p>
-
-                {syl.sections && syl.sections.length > 0 && (
-                  <div className="syllabus-meta-box">
-                    <div style={{ fontWeight: 700, fontSize: 12, color: '#073b82', marginBottom: 6, textTransform: 'uppercase' }}>
-                      Key Modules Covered:
-                    </div>
-                    <ul style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-                      {syl.sections.map((sec, idx) => (
-                        <li key={idx} style={{ fontSize: 12, color: '#475569', display: 'flex', alignItems: 'flex-start', gap: 6 }}>
-                          <CheckCircle2 size={13} color="#0755d9" style={{ flexShrink: 0, marginTop: 2 }} />
-                          <span>{sec}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                <div className="syllabus-card-footer listing-card-footer">
-                  {syl.syllabusUrl && (
-                    <a
-                      href={syl.syllabusUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-view-details syllabus-action-btn"
-                    >
-                      <Download size={13} />
-                      <span>Download Official Syllabus PDF</span>
-                    </a>
-                  )}
-                </div>
-              </div>
+              <SyllabusCard key={syl.id} syl={syl} />
             ))}
           </div>
 

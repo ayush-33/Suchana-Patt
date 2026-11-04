@@ -182,10 +182,10 @@ export function LoginPage() {
             className="confirmation-modal-box login-modal-box"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 id="forgot-modal-title" style={{ fontSize: 17, fontWeight: 700, marginBottom: 8, color: '#073b82' }}>
+            <h3 id="forgot-modal-title" className="login-modal-title">
               Password Reset Notice
             </h3>
-            <p style={{ fontSize: 13, color: '#475569', lineHeight: 1.5, marginBottom: 16 }}>
+            <p className="login-modal-desc">
               This is a frontend demonstration build. Password reset emails and OTP verification will be active once the backend mail service is connected.
             </p>
             <button

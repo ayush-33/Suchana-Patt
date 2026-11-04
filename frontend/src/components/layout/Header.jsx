@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { Search, Bookmark, Bell, User, FileText, CheckCheck, Trash2, X, BellOff, RotateCcw } from 'lucide-react';
+import { Search, Bookmark, Bell, User, FileText, CheckCheck, Trash2, X, BellOff, RotateCcw, Sun, Moon } from 'lucide-react';
 import { useBookmarks } from '../../hooks/useBookmarks';
 import { useNotifications } from '../../hooks/useNotifications';
+import { useTheme } from '../../hooks/useTheme';
 
 export function Header() {
   const [searchParams] = useSearchParams();
@@ -21,6 +22,7 @@ export function Header() {
   }
 
   const { savedJobsCount } = useBookmarks();
+  const { isDark, toggleTheme } = useTheme();
   const {
     notifications,
     unreadCount,
@@ -152,6 +154,7 @@ export function Header() {
                     <span>Live Alerts</span>
                     {unreadCount > 0 && (
                       <span
+                        className="notif-unread-count-pill"
                         style={{
                           fontSize: 11,
                           fontWeight: 700,
@@ -184,8 +187,7 @@ export function Header() {
                     {notifications.length > 0 && (
                       <button
                         type="button"
-                        className="notif-action-text-btn"
-                        style={{ color: '#dc2626' }}
+                        className="notif-action-text-btn notif-action-clear-btn"
                         onClick={clearAllNotifications}
                         title="Clear all notifications"
                       >
@@ -202,7 +204,7 @@ export function Header() {
                   {notifications.length === 0 ? (
                     <div className="notif-empty-state">
                       <BellOff size={28} />
-                      <div style={{ fontWeight: 600, fontSize: 13, color: '#13213a' }}>
+                      <div className="notif-empty-state-title">
                         No Active Alerts
                       </div>
                       <p style={{ fontSize: 12, maxWidth: 220, lineHeight: 1.4 }}>
@@ -282,6 +284,18 @@ export function Header() {
               <span className="header-badge-count">{savedJobsCount}</span>
             )}
           </Link>
+
+          {/* Desktop Theme Toggle */}
+          <button
+            type="button"
+            className="header-action-btn header-theme-toggle-btn"
+            onClick={toggleTheme}
+            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {isDark ? <Sun size={17} className="theme-toggle-icon" /> : <Moon size={17} className="theme-toggle-icon" />}
+            <span className="theme-toggle-label">{isDark ? 'Light' : 'Dark'}</span>
+          </button>
 
           {/* My Account */}
           <Link to="/login" className="header-action-btn" title="My Account">

@@ -7,6 +7,69 @@ import { Pagination } from '../components/jobs/Pagination';
 import { EmptyState } from '../components/common/EmptyState';
 import { getResults } from '../services/resultsService';
 
+function ResultsCard({ res }) {
+  return (
+    <div className="mini-listing-card results-card-item">
+      <div className="mini-card-top">
+        <div className="mini-card-header">
+          <Badge
+            type={res.status === 'Declared' ? 'open' : 'upcoming'}
+            text={res.status}
+          />
+          <span className="mini-card-category-tag">{res.category}</span>
+        </div>
+
+        <h3 className="mini-card-title">
+          {res.relatedJobId ? (
+            <Link to={`/jobs/${res.relatedJobId}`}>{res.examName}</Link>
+          ) : (
+            res.examName
+          )}
+        </h3>
+
+        <div className="mini-card-org">
+          <Building size={14} className="mini-card-org-icon" />
+          <span>{res.organization}</span>
+        </div>
+
+        {res.cutOffMarks && (
+          <div className="results-cutoff-box">
+            <strong>Cutoff:</strong> {res.cutOffMarks}
+          </div>
+        )}
+      </div>
+
+      <div className="card-flex-spacer" />
+
+      <div className="mini-card-footer">
+        <div className="mini-card-details-row">
+          <div className="results-date-meta">
+            <Calendar size={13} className="results-date-icon" />
+            <span>Declared: <strong>{res.declarationDateText}</strong></span>
+          </div>
+
+          <div className="results-actions-cell">
+            {res.resultUrl ? (
+              <a
+                href={res.resultUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mini-card-action-btn results-action-btn"
+                title="View official scorecard"
+              >
+                <ExternalLink size={12} />
+                <span>Scorecard</span>
+              </a>
+            ) : (
+              <span className="results-status-label">{res.status}</span>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function ResultsPage() {
   const [resultsList, setResultsList] = useState([]);
   const [total, setTotal] = useState(0);
@@ -122,62 +185,9 @@ export function ResultsPage() {
         />
       ) : (
         <>
-          <div className="four-card-grid">
+          <div className="four-card-grid results-cards-grid">
             {resultsList.map((res) => (
-              <div key={res.id} className="mini-listing-card">
-                <div>
-                  <div className="mini-card-header">
-                    <Badge
-                      type={res.status === 'Declared' ? 'open' : 'upcoming'}
-                      text={res.status}
-                    />
-                    <span style={{ fontSize: 11, color: '#64748b', fontWeight: 600 }}>{res.category}</span>
-                  </div>
-
-                  <h3 className="mini-card-title">
-                    {res.relatedJobId ? (
-                      <Link to={`/jobs/${res.relatedJobId}`}>{res.examName}</Link>
-                    ) : (
-                      res.examName
-                    )}
-                  </h3>
-
-                  <div className="mini-card-org">
-                    <Building size={12} style={{ display: 'inline', marginRight: 4 }} />
-                    {res.organization}
-                  </div>
-
-                  {res.cutOffMarks && (
-                    <div style={{ fontSize: 11.5, color: '#073b82', backgroundColor: '#eaf2ff', padding: '6px 8px', borderRadius: 4, marginTop: 10 }}>
-                      <strong>Cutoff:</strong> {res.cutOffMarks}
-                    </div>
-                  )}
-                </div>
-
-                <div className="mini-card-footer">
-                  <div className="mini-card-details-row">
-                    <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                      <Calendar size={12} />
-                      <span>Declared: <strong>{res.declarationDateText}</strong></span>
-                    </span>
-
-                    {res.resultUrl ? (
-                      <a
-                        href={res.resultUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mini-card-action-btn"
-                        title="View official scorecard"
-                      >
-                        <ExternalLink size={12} />
-                        <span>Scorecard</span>
-                      </a>
-                    ) : (
-                      <span style={{ fontSize: 11.5, color: '#94a3b8' }}>{res.status}</span>
-                    )}
-                  </div>
-                </div>
-              </div>
+              <ResultsCard key={res.id} res={res} />
             ))}
           </div>
 

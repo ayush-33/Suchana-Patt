@@ -100,9 +100,9 @@ export function AdmissionsPage() {
           <div className="two-card-listing-grid">
             {admissions.map((adm) => (
               <div key={adm.id} className="details-panel admission-card-item">
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+                <div className="admission-card-header">
                   <Badge type={adm.status === 'Open' ? 'open' : 'upcoming'} text={adm.status} />
-                  <span style={{ fontSize: 12, fontWeight: 700, color: '#0755d9' }}>
+                  <span className="admission-category-tag">
                     {adm.programCategory}
                   </span>
                 </div>
@@ -112,7 +112,7 @@ export function AdmissionsPage() {
                 </h3>
 
                 <div className="admission-card-org">
-                  <Building size={14} />
+                  <Building size={14} className="admission-org-icon" />
                   <span>{adm.institution}</span>
                 </div>
 
@@ -121,17 +121,25 @@ export function AdmissionsPage() {
                 </p>
 
                 <div className="admission-meta-box">
-                  <div><strong>Required Qualification:</strong> {adm.qualification}</div>
-                  <div style={{ marginTop: 4 }}><strong>Exam Schedule:</strong> {adm.examDateText}</div>
-                  <div style={{ marginTop: 4 }}><strong>Application Fee:</strong> {adm.applicationFee}</div>
+                  <div className="admission-meta-row">
+                    <strong>Required Qualification:</strong> <span>{adm.qualification || 'Refer to official admission brochure'}</span>
+                  </div>
+                  <div className="admission-meta-row">
+                    <strong>Exam Schedule:</strong> <span>{adm.examDateText || 'To be announced'}</span>
+                  </div>
+                  <div className="admission-meta-row">
+                    <strong>Application Fee:</strong> <span>{adm.applicationFee || 'Refer to notification brochure'}</span>
+                  </div>
                 </div>
+
+                <div className="card-flex-spacer" />
 
                 <div className="admission-card-footer">
                   <span className="admission-last-date">
-                    Last Date: <strong style={{ color: '#dc2626' }}>{formatDate(adm.lastDate)}</strong>
+                    Last Date: <strong className="admission-deadline-highlight">{formatDate(adm.lastDate)}</strong>
                   </span>
 
-                  {adm.officialUrl && (
+                  {adm.officialUrl ? (
                     <a
                       href={adm.officialUrl}
                       target="_blank"
@@ -141,6 +149,8 @@ export function AdmissionsPage() {
                       <span>Official Portal</span>
                       <ExternalLink size={12} />
                     </a>
+                  ) : (
+                    <span className="admission-action-unavailable">Portal Link Awaited</span>
                   )}
                 </div>
               </div>
