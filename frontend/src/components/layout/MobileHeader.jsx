@@ -418,7 +418,7 @@ export function MobileHeader() {
             {/* Sheet Header */}
             <div className="mobile-alerts-header">
               <div className="mobile-alerts-title">
-                <Bell size={18} color="#0755d9" />
+                <Bell size={18} className="mobile-alerts-title-icon" color={isDark ? '#60a5fa' : '#0755d9'} />
                 <span>Live Alerts</span>
                 {unreadCount > 0 && (
                   <span className="mobile-alerts-unread-badge">{unreadCount} new</span>
@@ -462,10 +462,10 @@ export function MobileHeader() {
               {notifications.length === 0 ? (
                 <div className="mobile-alerts-empty">
                   <BellOff size={32} />
-                  <div style={{ fontWeight: 700, fontSize: 14, color: '#13213a', marginTop: 8 }}>
+                  <div className="mobile-alerts-empty-title">
                     No Active Alerts
                   </div>
-                  <p style={{ fontSize: 12.5, color: '#64748b', margin: '4px 0 12px 0' }}>
+                  <p className="mobile-alerts-empty-desc">
                     You're all caught up! New recruitment notices will appear here.
                   </p>
                   <button

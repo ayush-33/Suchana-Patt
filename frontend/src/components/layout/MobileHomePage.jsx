@@ -171,7 +171,7 @@ export function MobileHomePage() {
   );
 
   return (
-    <div className={`mobile-homepage ${isDark ? 'dark-mode' : ''}`} data-theme={theme}>
+    <div className={`mobile-homepage ${isDark ? 'dark-mode' : ''}`} data-theme={theme} data-mobile-theme={theme}>
       {/* ====================================================================
           Section B: Horizontal Category Navigation Bar
           ==================================================================== */}

@@ -612,20 +612,119 @@ body.sp-mobile-dark-theme {
 }
 
 /* --------------------------------------------------------------------------
-   9. Mobile Drawer Menu in Mobile Dark Mode
+   9. Mobile Navigation Drawer in Mobile Dark Mode
    -------------------------------------------------------------------------- */
-.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-sheet {
-  background-color: #0d1729 !important;
-  border-right: 1px solid #263a56 !important;
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-backdrop,
+body.sp-mobile-dark-theme .mobile-drawer-backdrop {
+  background-color: rgba(3, 7, 18, 0.75) !important;
 }
 
-.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-link {
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-panel,
+body.sp-mobile-dark-theme .mobile-drawer-panel {
+  background-color: #0b1220 !important;
+  border-right: 1px solid #263a56 !important;
+  box-shadow: 4px 0 28px rgba(0, 0, 0, 0.6) !important;
   color: #f1f5f9 !important;
 }
 
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-header,
+body.sp-mobile-dark-theme .mobile-drawer-header {
+  background: linear-gradient(135deg, #0756c9 0%, #0046a8 100%) !important;
+  color: #ffffff !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-close-btn,
+body.sp-mobile-dark-theme .mobile-drawer-close-btn {
+  background: rgba(255, 255, 255, 0.16) !important;
+  color: #ffffff !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-close-btn:hover,
+body.sp-mobile-dark-theme .mobile-drawer-close-btn:hover {
+  background: rgba(255, 255, 255, 0.28) !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-body,
+body.sp-mobile-dark-theme .mobile-drawer-body {
+  background-color: #0b1220 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-section,
+body.sp-mobile-dark-theme .mobile-drawer-section {
+  border-bottom: 1px solid #1a273b;
+  padding-bottom: 12px;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-section-title,
+body.sp-mobile-dark-theme .mobile-drawer-section-title {
+  color: #94a3b8 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-link,
+body.sp-mobile-dark-theme .mobile-drawer-link {
+  color: #cbd5e1 !important;
+  background: transparent;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+}
+
 .layout-mobile[data-mobile-theme="dark"] .mobile-drawer-link:hover,
-.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-link:active {
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-link:focus-visible,
+body.sp-mobile-dark-theme .mobile-drawer-link:hover,
+body.sp-mobile-dark-theme .mobile-drawer-link:focus-visible {
   background-color: #152238 !important;
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-link.active,
+body.sp-mobile-dark-theme .mobile-drawer-link.active {
+  background-color: rgba(37, 99, 235, 0.22) !important;
+  color: #93c5fd !important;
+  border: 1px solid rgba(59, 130, 246, 0.35) !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-icon,
+body.sp-mobile-dark-theme .mobile-drawer-icon {
+  color: #60a5fa !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-arrow,
+body.sp-mobile-dark-theme .mobile-drawer-arrow {
+  color: #8190a7 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-tags,
+body.sp-mobile-dark-theme .mobile-drawer-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-tag,
+body.sp-mobile-dark-theme .mobile-drawer-tag {
+  background-color: #152238 !important;
+  color: #cbd5e1 !important;
+  border: 1px solid #263a56 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-tag:hover,
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-tag:active,
+body.sp-mobile-dark-theme .mobile-drawer-tag:hover,
+body.sp-mobile-dark-theme .mobile-drawer-tag:active {
+  background-color: #1b2b45 !important;
+  color: #60a5fa !important;
+  border-color: #3b82f6 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-badge-pill.static,
+body.sp-mobile-dark-theme .mobile-badge-pill.static {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
 }
 
 .layout-mobile[data-mobile-theme="dark"] .mobile-cat-pill {
@@ -638,5 +737,732 @@ body.sp-mobile-dark-theme {
 .layout-mobile[data-mobile-theme="dark"] .mobile-cat-pill.active {
   background-color: #2563eb !important;
   color: #ffffff !important;
+}
+
+/* --------------------------------------------------------------------------
+   10. Mobile Header & Search Bar in Mobile Dark Mode
+   -------------------------------------------------------------------------- */
+.layout-mobile[data-mobile-theme="dark"] .mobile-header,
+body.sp-mobile-dark-theme .mobile-header {
+  background-color: #0b1220 !important;
+  border-bottom: 1px solid #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-header-action-btn,
+body.sp-mobile-dark-theme .mobile-header-action-btn {
+  color: #cbd5e1 !important;
+  border-color: #263a56 !important;
+  background-color: #152238 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-header-action-btn:hover,
+body.sp-mobile-dark-theme .mobile-header-action-btn:hover {
+  background-color: #1b2b45 !important;
+  color: #60a5fa !important;
+  border-color: #3b82f6 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-search-row,
+body.sp-mobile-dark-theme .mobile-search-row {
+  background-color: #0b1220 !important;
+  border-top: 1px solid #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-search-input,
+body.sp-mobile-dark-theme .mobile-search-input {
+  background-color: #101b2d !important;
+  border: 1px solid #263a56 !important;
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-search-input::placeholder,
+body.sp-mobile-dark-theme .mobile-search-input::placeholder {
+  color: #8190a7 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-search-clear-btn,
+body.sp-mobile-dark-theme .mobile-search-clear-btn {
+  background-color: #1e293b !important;
+  color: #cbd5e1 !important;
+}
+
+/* --------------------------------------------------------------------------
+   11. Mobile Alerts Sheet in Mobile Dark Mode
+   -------------------------------------------------------------------------- */
+.layout-mobile[data-mobile-theme="dark"] .mobile-alerts-backdrop,
+body.sp-mobile-dark-theme .mobile-alerts-backdrop {
+  background-color: rgba(3, 7, 18, 0.75) !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alerts-panel,
+body.sp-mobile-dark-theme .mobile-alerts-panel {
+  background-color: #0b1220 !important;
+  border-top: 1px solid #263a56 !important;
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.7) !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alerts-header,
+body.sp-mobile-dark-theme .mobile-alerts-header {
+  background-color: #0d1729 !important;
+  border-bottom: 1px solid #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alerts-title,
+body.sp-mobile-dark-theme .mobile-alerts-title {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alerts-title-icon,
+body.sp-mobile-dark-theme .mobile-alerts-title-icon {
+  color: #60a5fa !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alerts-unread-badge,
+body.sp-mobile-dark-theme .mobile-alerts-unread-badge {
+  background-color: rgba(37, 99, 235, 0.25) !important;
+  color: #93c5fd !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alerts-text-btn,
+body.sp-mobile-dark-theme .mobile-alerts-text-btn {
+  color: #60a5fa !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alerts-text-btn.danger,
+body.sp-mobile-dark-theme .mobile-alerts-text-btn.danger {
+  color: #f87171 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alerts-close-btn,
+body.sp-mobile-dark-theme .mobile-alerts-close-btn {
+  background-color: #1e293b !important;
+  color: #cbd5e1 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alerts-close-btn:hover,
+body.sp-mobile-dark-theme .mobile-alerts-close-btn:hover {
+  background-color: #334155 !important;
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alerts-list,
+body.sp-mobile-dark-theme .mobile-alerts-list {
+  background-color: #0b1220 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alert-item,
+body.sp-mobile-dark-theme .mobile-alert-item {
+  background-color: #111c30 !important;
+  border: 1px solid #263a56 !important;
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alert-item.unread,
+body.sp-mobile-dark-theme .mobile-alert-item.unread {
+  background-color: #152238 !important;
+  border-left: 3px solid #3b82f6 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alert-tag,
+body.sp-mobile-dark-theme .mobile-alert-tag {
+  background-color: #1e293b !important;
+  color: #93c5fd !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alert-time,
+body.sp-mobile-dark-theme .mobile-alert-time {
+  color: #94a3b8 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alert-item-title,
+body.sp-mobile-dark-theme .mobile-alert-item-title {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alert-item-message,
+body.sp-mobile-dark-theme .mobile-alert-item-message {
+  color: #cbd5e1 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alert-dismiss,
+body.sp-mobile-dark-theme .mobile-alert-dismiss {
+  color: #8190a7 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alerts-empty,
+body.sp-mobile-dark-theme .mobile-alerts-empty {
+  color: #94a3b8 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alerts-empty-title,
+body.sp-mobile-dark-theme .mobile-alerts-empty-title {
+  color: #f1f5f9 !important;
+  font-weight: 700;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alerts-empty-desc,
+body.sp-mobile-dark-theme .mobile-alerts-empty-desc {
+  color: #94a3b8 !important;
+  font-size: 12.5px;
+  margin: 4px 0 12px 0;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-alerts-btn-secondary,
+body.sp-mobile-dark-theme .mobile-alerts-btn-secondary {
+  background-color: #152238 !important;
+  color: #cbd5e1 !important;
+  border: 1px solid #263a56 !important;
+}
+
+/* --------------------------------------------------------------------------
+   12. Post Detail & JobCard Qualification Panels in Mobile Dark Mode
+   -------------------------------------------------------------------------- */
+.layout-mobile[data-mobile-theme="dark"] .sp-job-card,
+body.sp-mobile-dark-theme .sp-job-card {
+  background-color: #111c30 !important;
+  border: 1px solid #263a56 !important;
+  color: #f1f5f9 !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35) !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .job-card-post-title,
+body.sp-mobile-dark-theme .job-card-post-title {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .job-card-org-name,
+body.sp-mobile-dark-theme .job-card-org-name {
+  color: #93c5fd !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .job-card-meta-item,
+body.sp-mobile-dark-theme .job-card-meta-item {
+  color: #cbd5e1 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .card-eligibility-panel,
+body.sp-mobile-dark-theme .card-eligibility-panel {
+  background-color: #17243a !important;
+  border: 1px solid #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .eligibility-col:not(:last-child),
+body.sp-mobile-dark-theme .eligibility-col:not(:last-child) {
+  border-right: 1px solid #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .eligibility-label,
+body.sp-mobile-dark-theme .eligibility-label {
+  color: #94a3b8 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .eligibility-val,
+body.sp-mobile-dark-theme .eligibility-val {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .eligibility-icon,
+body.sp-mobile-dark-theme .eligibility-icon {
+  color: #8190a7 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .job-card-footer,
+body.sp-mobile-dark-theme .job-card-footer {
+  background-color: #0d1729 !important;
+  border-top: 1px solid #263a56 !important;
+}
+
+/* Post Detail Sidebar Panels & Tracker Card */
+.layout-mobile[data-mobile-theme="dark"] .sidebar-deadline-panel,
+body.sp-mobile-dark-theme .sidebar-deadline-panel {
+  background-color: #111c30 !important;
+  border: 1px solid #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .sidebar-deadline-label,
+body.sp-mobile-dark-theme .sidebar-deadline-label {
+  color: #94a3b8 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .sidebar-deadline-value,
+body.sp-mobile-dark-theme .sidebar-deadline-value {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .sidebar-status-banner,
+body.sp-mobile-dark-theme .sidebar-status-banner {
+  background-color: #152238 !important;
+  border: 1px solid #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .at-a-glance-item,
+body.sp-mobile-dark-theme .at-a-glance-item {
+  border-bottom: 1px solid #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .glance-label,
+body.sp-mobile-dark-theme .glance-label {
+  color: #94a3b8 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .glance-value,
+body.sp-mobile-dark-theme .glance-value {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .sidebar-related-item,
+body.sp-mobile-dark-theme .sidebar-related-item {
+  background-color: #152238 !important;
+  border: 1px solid #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .sidebar-related-title,
+body.sp-mobile-dark-theme .sidebar-related-title {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .sidebar-related-meta,
+body.sp-mobile-dark-theme .sidebar-related-meta {
+  color: #94a3b8 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .job-updates-tracker-card,
+body.sp-mobile-dark-theme .job-updates-tracker-card {
+  background-color: #111c30 !important;
+  border: 1px solid #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .tracker-card-title,
+body.sp-mobile-dark-theme .tracker-card-title {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .tracker-card-desc,
+body.sp-mobile-dark-theme .tracker-card-desc {
+  color: #cbd5e1 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .tracker-btn-toggle,
+body.sp-mobile-dark-theme .tracker-btn-toggle {
+  background-color: #17243a !important;
+  border: 1px solid #263a56 !important;
+  color: #93c5fd !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .tracker-btn-toggle:hover,
+body.sp-mobile-dark-theme .tracker-btn-toggle:hover {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+}
+
+/* --------------------------------------------------------------------------
+   13. Search Page & Search Filter Drawer in Mobile Dark Mode
+   -------------------------------------------------------------------------- */
+.layout-mobile[data-mobile-theme="dark"] .search-header-panel,
+body.sp-mobile-dark-theme .search-header-panel {
+  background-color: #111c30 !important;
+  border: 1px solid #263a56 !important;
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-header-title,
+body.sp-mobile-dark-theme .search-header-title {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-header-subtitle,
+body.sp-mobile-dark-theme .search-header-subtitle {
+  color: #cbd5e1 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-query-highlight,
+body.sp-mobile-dark-theme .search-query-highlight {
+  color: #60a5fa !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-suggestions-row,
+body.sp-mobile-dark-theme .search-suggestions-row {
+  border-top-color: #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-suggestions-label,
+body.sp-mobile-dark-theme .search-suggestions-label {
+  color: #94a3b8 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-chip-btn,
+body.sp-mobile-dark-theme .search-chip-btn {
+  background-color: #152238 !important;
+  border: 1px solid #263a56 !important;
+  color: #cbd5e1 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-chip-btn:hover,
+body.sp-mobile-dark-theme .search-chip-btn:hover {
+  background-color: #1b2b45 !important;
+  color: #60a5fa !important;
+  border-color: #3b82f6 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-category-tabs-bar,
+body.sp-mobile-dark-theme .search-category-tabs-bar {
+  background-color: #0b1220 !important;
+  border-bottom: 1px solid #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-category-tab,
+body.sp-mobile-dark-theme .search-category-tab {
+  background-color: #152238 !important;
+  border: 1px solid #263a56 !important;
+  color: #cbd5e1 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-category-tab.active,
+body.sp-mobile-dark-theme .search-category-tab.active {
+  background-color: #2563eb !important;
+  border-color: #3b82f6 !important;
+  color: #ffffff !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-tab-count,
+body.sp-mobile-dark-theme .search-tab-count {
+  background-color: rgba(255, 255, 255, 0.16) !important;
+  color: inherit !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-results-toolbar,
+body.sp-mobile-dark-theme .search-results-toolbar {
+  background-color: #111c30 !important;
+  border: 1px solid #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-results-count-text,
+body.sp-mobile-dark-theme .search-results-count-text {
+  color: #94a3b8 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-results-count-text strong,
+body.sp-mobile-dark-theme .search-results-count-text strong {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-search-filter-btn,
+body.sp-mobile-dark-theme .mobile-search-filter-btn {
+  background-color: #152238 !important;
+  border: 1px solid #263a56 !important;
+  color: #cbd5e1 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-search-filter-badge,
+body.sp-mobile-dark-theme .mobile-search-filter-badge {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+}
+
+/* Search Filter Drawer */
+.layout-mobile[data-mobile-theme="dark"] .search-filter-drawer-overlay,
+body.sp-mobile-dark-theme .search-filter-drawer-overlay {
+  background-color: rgba(3, 7, 18, 0.75) !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-filter-drawer-container,
+body.sp-mobile-dark-theme .search-filter-drawer-container {
+  background-color: #0b1220 !important;
+  border-top: 1px solid #263a56 !important;
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.7) !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-filter-drawer-handle,
+body.sp-mobile-dark-theme .search-filter-drawer-handle {
+  background-color: #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-filter-drawer-header,
+body.sp-mobile-dark-theme .search-filter-drawer-header {
+  background-color: #0d1729 !important;
+  border-bottom: 1px solid #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-filter-drawer-title,
+body.sp-mobile-dark-theme .search-filter-drawer-title {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-filter-drawer-icon,
+body.sp-mobile-dark-theme .search-filter-drawer-icon {
+  color: #60a5fa !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-filter-drawer-badge,
+body.sp-mobile-dark-theme .search-filter-drawer-badge {
+  background-color: rgba(37, 99, 235, 0.25) !important;
+  color: #93c5fd !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-filter-drawer-reset-btn,
+body.sp-mobile-dark-theme .search-filter-drawer-reset-btn {
+  color: #60a5fa !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-filter-drawer-close-btn,
+body.sp-mobile-dark-theme .search-filter-drawer-close-btn {
+  background-color: #1e293b !important;
+  color: #cbd5e1 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-filter-drawer-body,
+body.sp-mobile-dark-theme .search-filter-drawer-body {
+  background-color: #0b1220 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-filter-drawer-body .search-filter-group-title,
+body.sp-mobile-dark-theme .search-filter-drawer-body .search-filter-group-title {
+  color: #94a3b8 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-filter-drawer-body .search-filter-checkbox-item,
+body.sp-mobile-dark-theme .search-filter-drawer-body .search-filter-checkbox-item {
+  background-color: #152238 !important;
+  border: 1px solid #263a56 !important;
+  color: #cbd5e1 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-filter-drawer-body .search-filter-checkbox-item.checked,
+body.sp-mobile-dark-theme .search-filter-drawer-body .search-filter-checkbox-item.checked {
+  background-color: rgba(37, 99, 235, 0.2) !important;
+  border-color: #3b82f6 !important;
+  color: #93c5fd !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-filter-checkbox-label,
+body.sp-mobile-dark-theme .search-filter-checkbox-label {
+  color: inherit !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-filter-count-pill,
+body.sp-mobile-dark-theme .search-filter-count-pill {
+  background-color: #1e293b !important;
+  color: #94a3b8 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-filter-drawer-footer,
+body.sp-mobile-dark-theme .search-filter-drawer-footer {
+  background-color: #0d1729 !important;
+  border-top: 1px solid #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-filter-drawer-btn-clear,
+body.sp-mobile-dark-theme .search-filter-drawer-btn-clear {
+  background-color: #152238 !important;
+  border: 1px solid #263a56 !important;
+  color: #cbd5e1 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-job-card,
+body.sp-mobile-dark-theme .search-job-card {
+  background-color: #111c30 !important;
+  border: 1px solid #263a56 !important;
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-job-title,
+body.sp-mobile-dark-theme .search-job-title {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-job-org,
+body.sp-mobile-dark-theme .search-job-org {
+  color: #93c5fd !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-job-org-icon,
+body.sp-mobile-dark-theme .search-job-org-icon {
+  color: #60a5fa !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-job-eligibility-row,
+body.sp-mobile-dark-theme .search-job-eligibility-row {
+  background-color: #17243a !important;
+  border: 1px solid #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-eligibility-label,
+body.sp-mobile-dark-theme .search-eligibility-label {
+  color: #94a3b8 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-eligibility-val,
+body.sp-mobile-dark-theme .search-eligibility-val {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-eligibility-divider,
+body.sp-mobile-dark-theme .search-eligibility-divider {
+  background-color: #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-job-meta-pill,
+body.sp-mobile-dark-theme .search-job-meta-pill {
+  background-color: #101b2d !important;
+  border: 1px solid #263a56 !important;
+  color: #cbd5e1 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-job-details-cta,
+body.sp-mobile-dark-theme .search-job-details-cta {
+  background-color: #17243a !important;
+  border: 1px solid #263a56 !important;
+  color: #60a5fa !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-empty-panel,
+.layout-mobile[data-mobile-theme="dark"] .search-empty-filters,
+.layout-mobile[data-mobile-theme="dark"] .search-guide-panel,
+body.sp-mobile-dark-theme .search-empty-panel,
+body.sp-mobile-dark-theme .search-empty-filters,
+body.sp-mobile-dark-theme .search-guide-panel {
+  background-color: #111c30 !important;
+  border: 1px dashed #263a56 !important;
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-empty-title,
+.layout-mobile[data-mobile-theme="dark"] .search-guide-title,
+body.sp-mobile-dark-theme .search-empty-title,
+body.sp-mobile-dark-theme .search-guide-title {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-empty-desc,
+.layout-mobile[data-mobile-theme="dark"] .search-guide-desc,
+body.sp-mobile-dark-theme .search-empty-desc,
+body.sp-mobile-dark-theme .search-guide-desc {
+  color: #cbd5e1 !important;
+}
+
+/* --------------------------------------------------------------------------
+   14. Confirmation Modals & Dialogs in Mobile Dark Mode
+   -------------------------------------------------------------------------- */
+.layout-mobile[data-mobile-theme="dark"] .confirmation-modal-backdrop,
+body.sp-mobile-dark-theme .confirmation-modal-backdrop {
+  background-color: rgba(3, 7, 18, 0.75) !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .confirmation-modal-box,
+body.sp-mobile-dark-theme .confirmation-modal-box {
+  background-color: #111c30 !important;
+  border: 1px solid #263a56 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7) !important;
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .confirmation-modal-title,
+body.sp-mobile-dark-theme .confirmation-modal-title {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .confirmation-modal-text,
+body.sp-mobile-dark-theme .confirmation-modal-text {
+  color: #cbd5e1 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .confirmation-modal-text strong,
+body.sp-mobile-dark-theme .confirmation-modal-text strong {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .confirmation-btn-cancel,
+body.sp-mobile-dark-theme .confirmation-btn-cancel {
+  background-color: #152238 !important;
+  border: 1px solid #263a56 !important;
+  color: #cbd5e1 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .confirmation-btn-cancel:hover,
+body.sp-mobile-dark-theme .confirmation-btn-cancel:hover {
+  background-color: #1b2b45 !important;
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .sp-toast,
+body.sp-mobile-dark-theme .sp-toast {
+  background-color: #111c30 !important;
+  border: 1px solid #263a56 !important;
+  color: #f1f5f9 !important;
+}
+
+/* --------------------------------------------------------------------------
+   15. Status Badges & Pills in Mobile Dark Mode
+   -------------------------------------------------------------------------- */
+.layout-mobile[data-mobile-theme="dark"] .sp-badge-gov,
+body.sp-mobile-dark-theme .sp-badge-gov {
+  background-color: rgba(96, 165, 250, 0.16) !important;
+  color: #93c5fd !important;
+  border-color: rgba(96, 165, 250, 0.3) !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .sp-badge-pvt,
+body.sp-mobile-dark-theme .sp-badge-pvt {
+  background-color: rgba(168, 85, 247, 0.16) !important;
+  color: #d8b4fe !important;
+  border-color: rgba(168, 85, 247, 0.3) !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .sp-badge-open,
+body.sp-mobile-dark-theme .sp-badge-open {
+  background-color: rgba(34, 197, 94, 0.16) !important;
+  color: #4ade80 !important;
+  border-color: rgba(34, 197, 94, 0.3) !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .sp-badge-upcoming,
+body.sp-mobile-dark-theme .sp-badge-upcoming {
+  background-color: rgba(251, 191, 36, 0.16) !important;
+  color: #fbbf24 !important;
+  border-color: rgba(251, 191, 36, 0.3) !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .sp-badge-closed,
+body.sp-mobile-dark-theme .sp-badge-closed {
+  background-color: rgba(248, 113, 113, 0.16) !important;
+  color: #f87171 !important;
+  border-color: rgba(248, 113, 113, 0.3) !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .sp-badge-released,
+body.sp-mobile-dark-theme .sp-badge-released {
+  background-color: rgba(56, 189, 248, 0.16) !important;
+  color: #7dd3fc !important;
+  border-color: rgba(56, 189, 248, 0.3) !important;
+}
+
+/* --------------------------------------------------------------------------
+   16. Mobile Typography, Contrast & Spacing Standards
+   -------------------------------------------------------------------------- */
+.layout-mobile[data-mobile-theme="dark"] h1,
+body.sp-mobile-dark-theme .layout-mobile h1 {
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] h2,
+body.sp-mobile-dark-theme .layout-mobile h2 {
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] h3,
+body.sp-mobile-dark-theme .layout-mobile h3 {
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] p,
+body.sp-mobile-dark-theme .layout-mobile p {
+  color: #cbd5e1;
+}
+
+.layout-mobile[data-mobile-theme="dark"] a:not([class]),
+body.sp-mobile-dark-theme .layout-mobile a:not([class]) {
+  color: #60a5fa;
 }
 
