@@ -5,8 +5,11 @@ import { Badge } from '../components/common/Badge';
 import { Pagination } from '../components/jobs/Pagination';
 import { EmptyState } from '../components/common/EmptyState';
 import { getAnswerKeys } from '../services/answerKeysService';
+import { useViewport } from '../hooks/useViewport';
+import { MobileCategoryListingPage } from '../components/category/MobileCategoryListingPage';
 
 export function AnswerKeysPage() {
+  const { isMobile } = useViewport(768);
   const [answerKeys, setAnswerKeys] = useState([]);
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
@@ -38,6 +41,10 @@ export function AnswerKeysPage() {
   }, [search, statusFilter, currentPage]);
 
   const breadcrumbs = [{ label: 'Answer Keys', to: '/answer-keys' }];
+
+  if (isMobile) {
+    return <MobileCategoryListingPage categorySlug="answer-keys" />;
+  }
 
   return (
     <div className="page-container main-content answer-keys-page-container">

@@ -13,6 +13,7 @@ import { CurrentAffairsPage } from '../pages/CurrentAffairsPage';
 import { SavedJobsPage } from '../pages/SavedJobsPage';
 import { LoginPage } from '../pages/LoginPage';
 import { SearchResultsPage } from '../pages/SearchResultsPage';
+import { CategoryPage } from '../pages/CategoryPage';
 import { NotFoundPage } from '../pages/NotFoundPage';
 
 export function AppRoutes() {
@@ -20,6 +21,7 @@ export function AppRoutes() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/search" element={<SearchResultsPage />} />
+      <Route path="/category/:categorySlug" element={<CategoryPage />} />
       <Route path="/latest-jobs" element={<LatestJobsPage />} />
       <Route path="/jobs/:jobId" element={<JobDetailsPage />} />
       <Route path="/admit-cards" element={<AdmitCardsPage />} />

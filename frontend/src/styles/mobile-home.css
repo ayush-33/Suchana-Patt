@@ -1,0 +1,693 @@
+/* Suchana Patt - Mobile Homepage Stylesheet (Scoped Strictly to Mobile) */
+
+.mobile-homepage {
+  background-color: #F0F7FF;
+  min-height: calc(100vh - 56px);
+  padding-bottom: 28px;
+  width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.mobile-homepage.dark-mode,
+.mobile-homepage[data-theme="dark"] {
+  background-color: #070d19;
+  color: #f1f5f9;
+}
+
+/* ==========================================================================
+   Section B: Horizontal Category Navigation
+   ========================================================================== */
+
+.mobile-category-nav {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px 10px 8px 10px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+}
+
+.mobile-category-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.mobile-category-track {
+  display: flex;
+  gap: 7px;
+  width: max-content;
+  align-items: center;
+}
+
+.mobile-category-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #d5e2f1;
+  background: #ffffff;
+  color: #07143D;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  user-select: none;
+  flex-shrink: 0;
+  font-family: inherit;
+}
+
+.mobile-category-btn:active {
+  transform: scale(0.97);
+}
+
+.mobile-category-btn.active {
+  background: #0756C9;
+  color: #ffffff;
+  border-color: #0756C9;
+  box-shadow: 0 2px 6px rgba(7, 86, 201, 0.35);
+}
+
+.mobile-category-btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Dark Mode - Categories */
+.mobile-homepage.dark-mode .mobile-category-btn,
+.mobile-homepage[data-theme="dark"] .mobile-category-btn {
+  background: #111b2e;
+  color: #cbd5e1;
+  border-color: #1e293b;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.mobile-homepage.dark-mode .mobile-category-btn.active,
+.mobile-homepage[data-theme="dark"] .mobile-category-btn.active {
+  background: #1d4ed8;
+  color: #ffffff;
+  border-color: #1d4ed8;
+  box-shadow: 0 2px 6px rgba(29, 78, 216, 0.4);
+}
+
+/* ==========================================================================
+   Section C: Notification Ticker
+   ========================================================================== */
+
+.mobile-ticker-container {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #d5e2f1;
+  border-radius: 8px;
+  margin: 2px 10px 12px 10px;
+  overflow: hidden;
+  height: 36px;
+  box-shadow: 0 1px 3px rgba(7, 86, 201, 0.06);
+  box-sizing: border-box;
+}
+
+.mobile-ticker-announcement {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #0756C9;
+  color: #ffffff;
+  padding: 0 8px;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.mobile-ticker-badge {
+  background: #ffd633;
+  color: #07143D;
+  font-weight: 800;
+  font-size: 9.5px;
+  padding: 1.5px 5px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.mobile-ticker-track-wrapper {
+  flex: 1;
+  overflow: hidden;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.mobile-ticker-marquee {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: mobileMarquee 38s linear infinite;
+  will-change: transform;
+}
+
+.mobile-ticker-marquee:hover,
+.mobile-ticker-marquee:active {
+  animation-play-state: paused;
+}
+
+@keyframes mobileMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.mobile-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 4px;
+}
+
+.mobile-ticker-link {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #0756C9;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+.mobile-ticker-link:hover,
+.mobile-ticker-link:active {
+  text-decoration: underline;
+  color: #0645A5;
+}
+
+.mobile-ticker-sep {
+  color: #94a3b8;
+  font-weight: 300;
+  font-size: 12px;
+  margin: 0 8px;
+  user-select: none;
+}
+
+/* Dark Mode - Ticker */
+.mobile-homepage.dark-mode .mobile-ticker-container,
+.mobile-homepage[data-theme="dark"] .mobile-ticker-container {
+  background: #0f172a;
+  border-color: #1e293b;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.mobile-homepage.dark-mode .mobile-ticker-announcement,
+.mobile-homepage[data-theme="dark"] .mobile-ticker-announcement {
+  background: #1e3a8a;
+}
+
+.mobile-homepage.dark-mode .mobile-ticker-link,
+.mobile-homepage[data-theme="dark"] .mobile-ticker-link {
+  color: #60a5fa;
+}
+
+.mobile-homepage.dark-mode .mobile-ticker-link:hover,
+.mobile-homepage.dark-mode .mobile-ticker-link:active,
+.mobile-homepage[data-theme="dark"] .mobile-ticker-link:hover,
+.mobile-homepage[data-theme="dark"] .mobile-ticker-link:active {
+  color: #93c5fd;
+}
+
+.mobile-homepage.dark-mode .mobile-ticker-sep,
+.mobile-homepage[data-theme="dark"] .mobile-ticker-sep {
+  color: #334155;
+}
+
+/* ==========================================================================
+   Section 3 & 4: Two-Column Equal-Height Category Layout
+   ========================================================================== */
+
+.mobile-dashboard-section {
+  padding: 0 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Two-column CSS Grid with natural row stretching behavior */
+.mobile-home-category-grid,
+.mobile-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 10px;
+  row-gap: 12px;
+  align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Individual Category Card - stretches to 100% of row height */
+.mobile-category-card {
+  height: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #d5e2f1;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(7, 86, 201, 0.08);
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: box-shadow 0.15s ease;
+}
+
+/* Card Header - consistent height across all cards */
+.mobile-card-header {
+  background: linear-gradient(135deg, #0861D5 0%, #0347A8 100%);
+  color: #ffffff;
+  padding: 7px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  min-height: 36px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.mobile-card-header-left {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.mobile-card-header-icon {
+  flex-shrink: 0;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-card-header-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: -0.2px;
+}
+
+.mobile-card-header-badge {
+  background: rgba(255, 255, 255, 0.28);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  line-height: 1.3;
+}
+
+/* Card Body - flex: 1 expands to fill full card height, leaving clean empty space at bottom */
+.mobile-card-body {
+  flex: 1;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+/* Notification Row - compact list layout with vertically centered icon & chevron */
+.mobile-notif-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 7px;
+  border-bottom: 1px solid #D5E2F1;
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.12s ease;
+  cursor: pointer;
+  user-select: none;
+  width: 100%;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.mobile-notif-row:last-child {
+  border-bottom: none;
+}
+
+.mobile-notif-row:active {
+  background-color: #eaf2ff;
+}
+
+.mobile-notif-icon {
+  flex-shrink: 0;
+  color: #0865F5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+}
+
+.mobile-notif-title {
+  flex: 1;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #07143D;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.mobile-notif-chevron {
+  flex-shrink: 0;
+  color: #8da2be;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  margin-left: 2px;
+}
+
+.mobile-card-empty {
+  padding: 14px 8px;
+  text-align: center;
+  font-size: 11px;
+  color: #64748b;
+  font-style: italic;
+}
+
+/* ==========================================================================
+   Section 5: Mobile FAQ Accordion Section
+   ========================================================================== */
+
+.mobile-faq-section {
+  margin: 20px 10px 10px 10px;
+  background: #ffffff;
+  border: 1px solid #d5e2f1;
+  border-radius: 10px;
+  padding: 16px 12px;
+  box-shadow: 0 1px 4px rgba(7, 86, 201, 0.08);
+  box-sizing: border-box;
+}
+
+.mobile-faq-header {
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.mobile-faq-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #eef5ff;
+  color: #0756C9;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  border: 1px solid #d0e2f9;
+}
+
+.mobile-faq-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #07143D;
+  margin: 0 0 6px 0;
+  line-height: 1.3;
+}
+
+.mobile-faq-subtitle {
+  font-size: 11.5px;
+  color: #536781;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.mobile-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobile-faq-card {
+  border: 1px solid #d5e2f1;
+  border-radius: 8px;
+  background: #fbfdff;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.mobile-faq-card.open {
+  border-color: #93c5fd;
+  box-shadow: 0 2px 8px rgba(7, 86, 201, 0.1);
+  background: #ffffff;
+}
+
+.mobile-faq-card h3 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.mobile-faq-question-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: #07143D;
+  line-height: 1.35;
+  transition: background-color 0.15s ease;
+}
+
+.mobile-faq-question-btn:active {
+  background-color: #eef6ff;
+}
+
+.mobile-faq-question-text {
+  flex: 1;
+  word-break: break-word;
+}
+
+.mobile-faq-chevron-wrapper {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0756C9;
+  transition: transform 0.22s ease;
+}
+
+.mobile-faq-chevron-wrapper.rotated {
+  transform: rotate(180deg);
+}
+
+.mobile-faq-answer {
+  padding: 0 12px 12px 12px;
+  font-size: 11.5px;
+  color: #334155;
+  line-height: 1.55;
+  background: #f4f8fd;
+  border-top: 1px solid #e2edf9;
+  animation: mobileFaqFadeIn 0.2s ease-out;
+}
+
+.mobile-faq-answer p {
+  margin: 8px 0 0 0;
+}
+
+@keyframes mobileFaqFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dark Mode - Dashboard & Cards */
+.mobile-homepage.dark-mode .mobile-category-card,
+.mobile-homepage[data-theme="dark"] .mobile-category-card {
+  background: #0f172a;
+  border-color: #1e293b;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.mobile-homepage.dark-mode .mobile-card-header,
+.mobile-homepage[data-theme="dark"] .mobile-card-header {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%);
+}
+
+.mobile-homepage.dark-mode .mobile-card-header-badge,
+.mobile-homepage[data-theme="dark"] .mobile-card-header-badge {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.mobile-homepage.dark-mode .mobile-card-body,
+.mobile-homepage[data-theme="dark"] .mobile-card-body {
+  background: #0f172a;
+}
+
+.mobile-homepage.dark-mode .mobile-notif-row,
+.mobile-homepage[data-theme="dark"] .mobile-notif-row {
+  border-bottom-color: #1e293b;
+}
+
+.mobile-homepage.dark-mode .mobile-notif-row:active,
+.mobile-homepage[data-theme="dark"] .mobile-notif-row:active {
+  background-color: #162238;
+}
+
+.mobile-homepage.dark-mode .mobile-notif-icon,
+.mobile-homepage[data-theme="dark"] .mobile-notif-icon {
+  color: #3b82f6;
+}
+
+.mobile-homepage.dark-mode .mobile-notif-title,
+.mobile-homepage[data-theme="dark"] .mobile-notif-title {
+  color: #e2e8f0;
+}
+
+.mobile-homepage.dark-mode .mobile-notif-chevron,
+.mobile-homepage[data-theme="dark"] .mobile-notif-chevron {
+  color: #64748b;
+}
+
+.mobile-homepage.dark-mode .mobile-card-empty,
+.mobile-homepage[data-theme="dark"] .mobile-card-empty {
+  color: #94a3b8;
+}
+
+/* Dark Mode - FAQ Section */
+.mobile-homepage.dark-mode .mobile-faq-section,
+.mobile-homepage[data-theme="dark"] .mobile-faq-section,
+.mobile-homepage[data-mobile-theme="dark"] .mobile-faq-section {
+  background: #0f172a;
+  border-color: #1e293b;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.mobile-homepage.dark-mode .mobile-faq-badge,
+.mobile-homepage[data-theme="dark"] .mobile-faq-badge,
+.mobile-homepage[data-mobile-theme="dark"] .mobile-faq-badge {
+  background: #172554;
+  color: #93c5fd;
+  border-color: #1e3a8a;
+}
+
+.mobile-homepage.dark-mode .mobile-faq-title,
+.mobile-homepage[data-theme="dark"] .mobile-faq-title,
+.mobile-homepage[data-mobile-theme="dark"] .mobile-faq-title {
+  color: #f1f5f9;
+}
+
+.mobile-homepage.dark-mode .mobile-faq-subtitle,
+.mobile-homepage[data-theme="dark"] .mobile-faq-subtitle,
+.mobile-homepage[data-mobile-theme="dark"] .mobile-faq-subtitle {
+  color: #94a3b8;
+}
+
+.mobile-homepage.dark-mode .mobile-faq-card,
+.mobile-homepage[data-theme="dark"] .mobile-faq-card,
+.mobile-homepage[data-mobile-theme="dark"] .mobile-faq-card {
+  background: #131d33;
+  border-color: #1e293b;
+}
+
+.mobile-homepage.dark-mode .mobile-faq-card.open,
+.mobile-homepage[data-theme="dark"] .mobile-faq-card.open,
+.mobile-homepage[data-mobile-theme="dark"] .mobile-faq-card.open {
+  background: #17243c;
+  border-color: #2563eb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.mobile-homepage.dark-mode .mobile-faq-question-btn,
+.mobile-homepage[data-theme="dark"] .mobile-faq-question-btn,
+.mobile-homepage[data-mobile-theme="dark"] .mobile-faq-question-btn {
+  color: #e2e8f0;
+}
+
+.mobile-homepage.dark-mode .mobile-faq-question-btn:active,
+.mobile-homepage[data-theme="dark"] .mobile-faq-question-btn:active,
+.mobile-homepage[data-mobile-theme="dark"] .mobile-faq-question-btn:active {
+  background-color: #1e293b;
+}
+
+.mobile-homepage.dark-mode .mobile-faq-chevron-wrapper,
+.mobile-homepage[data-theme="dark"] .mobile-faq-chevron-wrapper,
+.mobile-homepage[data-mobile-theme="dark"] .mobile-faq-chevron-wrapper {
+  color: #60a5fa;
+}
+
+.mobile-homepage.dark-mode .mobile-faq-answer,
+.mobile-homepage[data-theme="dark"] .mobile-faq-answer,
+.mobile-homepage[data-mobile-theme="dark"] .mobile-faq-answer {
+  background: #0f172a;
+  border-top-color: #1e293b;
+  color: #cbd5e1;
+}
+
+/* ==========================================================================
+   Responsive adjustments across mobile viewports (320px - 430px)
+   Maintains two columns at all times, adjusting spacing rather than stacking
+   ========================================================================== */
+@media (max-width: 350px) {
+  .mobile-home-category-grid,
+  .mobile-dashboard-grid {
+    column-gap: 6px;
+    row-gap: 10px;
+  }
+
+  .mobile-dashboard-section {
+    padding: 0 6px;
+  }
+
+  .mobile-card-header {
+    padding: 6px 5px;
+    min-height: 34px;
+  }
+
+  .mobile-card-header-title {
+    font-size: 11px;
+  }
+
+  .mobile-card-header-badge {
+    font-size: 9px;
+    padding: 1px 4px;
+  }
+
+  .mobile-notif-row {
+    padding: 6px 4px;
+    gap: 4px;
+  }
+
+  .mobile-notif-title {
+    font-size: 10px;
+    line-height: 1.25;
+  }
+}

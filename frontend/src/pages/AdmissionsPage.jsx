@@ -6,8 +6,11 @@ import { Pagination } from '../components/jobs/Pagination';
 import { EmptyState } from '../components/common/EmptyState';
 import { getAdmissions } from '../services/admissionsService';
 import { formatDate } from '../utils/formatters';
+import { useViewport } from '../hooks/useViewport';
+import { MobileCategoryListingPage } from '../components/category/MobileCategoryListingPage';
 
 export function AdmissionsPage() {
+  const { isMobile } = useViewport(768);
   const [admissions, setAdmissions] = useState([]);
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
@@ -39,6 +42,10 @@ export function AdmissionsPage() {
   }, [search, statusFilter, currentPage]);
 
   const breadcrumbs = [{ label: 'Admissions', to: '/admissions' }];
+
+  if (isMobile) {
+    return <MobileCategoryListingPage categorySlug="admissions" />;
+  }
 
   return (
     <div className="page-container main-content admissions-page-container">

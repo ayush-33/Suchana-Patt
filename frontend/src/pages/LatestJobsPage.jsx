@@ -9,6 +9,7 @@ import { ActiveFilterChips } from '../components/jobs/ActiveFilterChips';
 import { Pagination } from '../components/jobs/Pagination';
 import { EmptyState } from '../components/common/EmptyState';
 import { Breadcrumbs } from '../components/layout/Breadcrumbs';
+import { MobileCategoryListingPage } from '../components/category/MobileCategoryListingPage';
 import { getJobs } from '../services/jobsService';
 import { useViewport } from '../hooks/useViewport';
 
@@ -145,6 +146,11 @@ export function LatestJobsPage() {
   const breadcrumbs = [
     { label: 'Latest Jobs', to: '/latest-jobs' }
   ];
+
+  if (isMobile) {
+    const mobileCat = selectedFilters.category?.[0]?.toLowerCase() || 'latest-jobs';
+    return <MobileCategoryListingPage categorySlug={mobileCat} />;
+  }
 
   return (
     <div className="page-container main-content latest-jobs-page-container">

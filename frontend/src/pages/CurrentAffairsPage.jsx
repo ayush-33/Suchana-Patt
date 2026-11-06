@@ -4,8 +4,11 @@ import { Breadcrumbs } from '../components/layout/Breadcrumbs';
 import { Pagination } from '../components/jobs/Pagination';
 import { EmptyState } from '../components/common/EmptyState';
 import { getCurrentAffairs } from '../services/currentAffairsService';
+import { useViewport } from '../hooks/useViewport';
+import { MobileCategoryListingPage } from '../components/category/MobileCategoryListingPage';
 
 export function CurrentAffairsPage() {
+  const { isMobile } = useViewport(768);
   const [articles, setArticles] = useState([]);
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
@@ -50,6 +53,10 @@ export function CurrentAffairsPage() {
   };
 
   const breadcrumbs = [{ label: 'Current Affairs', to: '/current-affairs' }];
+
+  if (isMobile) {
+    return <MobileCategoryListingPage categorySlug="current-affairs" />;
+  }
 
   return (
     <div className="page-container main-content current-affairs-page-container">

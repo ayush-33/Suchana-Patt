@@ -7,6 +7,8 @@ import { Pagination } from '../components/jobs/Pagination';
 import { EmptyState } from '../components/common/EmptyState';
 import { getAdmitCards } from '../services/admitCardsService';
 import { useReminders } from '../hooks/useReminders';
+import { useViewport } from '../hooks/useViewport';
+import { MobileCategoryListingPage } from '../components/category/MobileCategoryListingPage';
 
 function AdmitCardCard({ ac, hasReminder, toggleReminder }) {
   const isReleased = ac.status === 'Released';
@@ -100,6 +102,7 @@ function AdmitCardCard({ ac, hasReminder, toggleReminder }) {
 }
 
 export function AdmitCardsPage() {
+  const { isMobile } = useViewport(768);
   const { hasReminder, toggleReminder } = useReminders();
   const [admitCards, setAdmitCards] = useState([]);
   const [total, setTotal] = useState(0);
@@ -136,6 +139,10 @@ export function AdmitCardsPage() {
   }, [search, statusFilter, categoryFilter, sort, currentPage]);
 
   const breadcrumbs = [{ label: 'Admit Cards', to: '/admit-cards' }];
+
+  if (isMobile) {
+    return <MobileCategoryListingPage categorySlug="admit-cards" />;
+  }
 
   return (
     <div className="page-container main-content admit-cards-page-container">

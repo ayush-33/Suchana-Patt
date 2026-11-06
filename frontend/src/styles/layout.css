@@ -889,13 +889,26 @@
 
 /* Compact Mobile Header */
 .mobile-header {
-  background-color: var(--color-primary);
+  background: linear-gradient(135deg, #0756C9 0%, #0046A8 100%);
   color: #ffffff;
   position: sticky;
   top: 0;
   z-index: 1000;
   box-shadow: 0 2px 8px rgba(7, 59, 130, 0.2);
   width: 100%;
+}
+
+.mobile-header.dark-mode,
+.mobile-header[data-theme="dark"] {
+  background: linear-gradient(135deg, #0b1528 0%, #060c18 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid #1e293b;
+}
+
+.mobile-header.dark-mode .mobile-search-row,
+.mobile-header[data-theme="dark"] .mobile-search-row {
+  background-color: #070d19;
+  border-top: 1px solid #1e293b;
 }
 
 .mobile-header-bar {

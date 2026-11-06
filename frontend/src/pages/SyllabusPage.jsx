@@ -4,6 +4,8 @@ import { Breadcrumbs } from '../components/layout/Breadcrumbs';
 import { Pagination } from '../components/jobs/Pagination';
 import { EmptyState } from '../components/common/EmptyState';
 import { getSyllabus } from '../services/syllabusService';
+import { useViewport } from '../hooks/useViewport';
+import { MobileCategoryListingPage } from '../components/category/MobileCategoryListingPage';
 
 function SyllabusCard({ syl }) {
   const [expanded, setExpanded] = useState(false);
@@ -77,6 +79,7 @@ function SyllabusCard({ syl }) {
 }
 
 export function SyllabusPage() {
+  const { isMobile } = useViewport(768);
   const [syllabusList, setSyllabusList] = useState([]);
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
@@ -108,6 +111,10 @@ export function SyllabusPage() {
   }, [search, categoryFilter, currentPage]);
 
   const breadcrumbs = [{ label: 'Syllabus', to: '/syllabus' }];
+
+  if (isMobile) {
+    return <MobileCategoryListingPage categorySlug="syllabus" />;
+  }
 
   return (
     <div className="page-container main-content syllabus-page-container">

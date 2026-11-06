@@ -6,6 +6,8 @@ import { Badge } from '../components/common/Badge';
 import { Pagination } from '../components/jobs/Pagination';
 import { EmptyState } from '../components/common/EmptyState';
 import { getResults } from '../services/resultsService';
+import { useViewport } from '../hooks/useViewport';
+import { MobileCategoryListingPage } from '../components/category/MobileCategoryListingPage';
 
 function ResultsCard({ res }) {
   return (
@@ -71,6 +73,7 @@ function ResultsCard({ res }) {
 }
 
 export function ResultsPage() {
+  const { isMobile } = useViewport(768);
   const [resultsList, setResultsList] = useState([]);
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
@@ -104,6 +107,10 @@ export function ResultsPage() {
   }, [search, statusFilter, categoryFilter, currentPage]);
 
   const breadcrumbs = [{ label: 'Results', to: '/results' }];
+
+  if (isMobile) {
+    return <MobileCategoryListingPage categorySlug="results" />;
+  }
 
   return (
     <div className="page-container main-content results-page-container">

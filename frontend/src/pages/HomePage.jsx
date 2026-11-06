@@ -32,8 +32,10 @@ import { getSyllabus } from '../services/syllabusService';
 import { getAnswerKeys } from '../services/answerKeysService';
 import { mockLiveUpdates } from '../data/mockLiveUpdates';
 import { formatDate } from '../utils/formatters';
+import { useViewport } from '../hooks/useViewport';
+import { MobileHomePage } from '../components/layout/MobileHomePage';
 
-export function HomePage() {
+function DesktopHomePage() {
   const [featuredJobs, setFeaturedJobs] = useState([]);
   const [admitCards, setAdmitCards] = useState([]);
   const [resultsList, setResultsList] = useState([]);
@@ -483,3 +485,9 @@ export function HomePage() {
     </div>
   );
 }
+
+export function HomePage() {
+  const { isMobile } = useViewport(768);
+  return isMobile ? <MobileHomePage /> : <DesktopHomePage />;
+}
+

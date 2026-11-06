@@ -17,6 +17,37 @@ export function ThemeProvider({ children }) {
     }
   });
 
+  // Mobile automatic appearance detection based on browser/device preference
+  const [mobileTheme, setMobileTheme] = useState(() => {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    return 'light';
+  });
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const handleChange = (e) => {
+      setMobileTheme(e.matches ? 'dark' : 'light');
+    };
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleChange);
+    } else if (mediaQuery.addListener) {
+      mediaQuery.addListener(handleChange);
+    }
+
+    return () => {
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener('change', handleChange);
+      } else if (mediaQuery.removeListener) {
+        mediaQuery.removeListener(handleChange);
+      }
+    };
+  }, []);
+
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, theme);
@@ -43,7 +74,9 @@ export function ThemeProvider({ children }) {
         theme,
         isDark,
         toggleTheme,
-        setTheme
+        setTheme,
+        mobileTheme,
+        isMobileDark: mobileTheme === 'dark'
       }}
     >
       {children}

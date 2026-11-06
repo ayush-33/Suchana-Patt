@@ -9,3 +9,17 @@ export function useTheme() {
   return context;
 }
 
+export function useMobileTheme() {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error('useMobileTheme must be used within a ThemeProvider');
+  }
+  const isDark = context.mobileTheme === 'dark';
+  return {
+    theme: context.mobileTheme || 'light',
+    isDark,
+    isLight: !isDark
+  };
+}
+
+

@@ -1,0 +1,642 @@
+/* ==========================================================================
+   SUCHANA PATT — GLOBAL MOBILE THEME STYLESHEET
+   Provides comprehensive Light & Dark mode support across all mobile pages:
+   - Homepage, Category Listing, Post Details, Tables, Search, Login, Saved Posts, Footer
+   - Scoped strictly to .layout-mobile[data-mobile-theme="..."] & body.sp-mobile-dark-theme
+   - 100% ISOLATED: Zero influence on desktop styling or desktop dark mode rules
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Root Page Surfaces & Global Mobile Containers
+   -------------------------------------------------------------------------- */
+body.sp-mobile-dark-theme {
+  background-color: #080f1e !important;
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"],
+[data-mobile-theme="dark"] .layout-mobile {
+  background-color: #080f1e;
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-main-wrapper,
+.layout-mobile[data-mobile-theme="dark"] .app-main-content,
+.layout-mobile[data-mobile-theme="dark"] .page-container,
+.layout-mobile[data-mobile-theme="dark"] .main-content {
+  background-color: #080f1e;
+  color: #f1f5f9;
+}
+
+/* Light mode mobile baseline */
+.layout-mobile[data-mobile-theme="light"],
+.layout-mobile:not([data-mobile-theme="dark"]) {
+  background-color: #f3f7fc;
+  color: #10234d;
+}
+
+.layout-mobile[data-mobile-theme="light"] .mobile-main-wrapper,
+.layout-mobile[data-mobile-theme="light"] :not(.site-footer) > .page-container,
+.layout-mobile:not([data-mobile-theme="dark"]) .mobile-main-wrapper {
+  background-color: #f3f7fc;
+  color: #10234d;
+}
+
+/* --------------------------------------------------------------------------
+   2. Breadcrumbs on Mobile
+   -------------------------------------------------------------------------- */
+.layout-mobile[data-mobile-theme="dark"] .breadcrumbs-wrapper,
+.layout-mobile[data-mobile-theme="dark"] .breadcrumbs-container {
+  color: #8190a7;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .breadcrumbs-link {
+  color: #60a5fa;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .breadcrumbs-current,
+.layout-mobile[data-mobile-theme="dark"] .breadcrumbs-item.active {
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .breadcrumbs-separator {
+  color: #8190a7;
+}
+
+/* --------------------------------------------------------------------------
+   3. Job Details Page (Post Detail) in Mobile Dark Mode
+   -------------------------------------------------------------------------- */
+.layout-mobile[data-mobile-theme="dark"] .job-details-page-container,
+.layout-mobile[data-mobile-theme="dark"] .job-details-layout {
+  background-color: #080f1e;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .details-panel,
+.layout-mobile[data-mobile-theme="dark"] .job-overview-card,
+.layout-mobile[data-mobile-theme="dark"] .sidebar-panel,
+.layout-mobile[data-mobile-theme="dark"] .details-sidebar-card {
+  background-color: #152238;
+  border: 1px solid #263a56;
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .job-main-title {
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .job-main-org {
+  color: #93c5fd;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .job-category-tag {
+  background-color: rgba(37, 99, 235, 0.2);
+  color: #93c5fd;
+  border: 1px solid rgba(96, 165, 250, 0.3);
+}
+
+.layout-mobile[data-mobile-theme="dark"] .job-header-dates-strip {
+  background-color: #0d1729;
+  border: 1px solid #263a56;
+  color: #a7b4c8;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .job-header-dates-strip span strong {
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .details-section-title {
+  color: #f1f5f9;
+  border-bottom-color: #263a56;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .details-section-title svg {
+  color: #3b82f6;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .details-summary-text {
+  color: #cbd5e1;
+}
+
+/* Post Detail Tables (Dates, Fees, Vacancies, Official Links) */
+.layout-mobile[data-mobile-theme="dark"] .sp-details-table,
+.layout-mobile[data-mobile-theme="dark"] .job-details-table,
+.layout-mobile[data-mobile-theme="dark"] table {
+  background-color: #152238;
+  border-color: #263a56;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .sp-details-table thead th,
+.layout-mobile[data-mobile-theme="dark"] .job-details-table thead th,
+.layout-mobile[data-mobile-theme="dark"] table thead th {
+  background-color: #0d1729;
+  color: #f1f5f9;
+  border-bottom: 1px solid #263a56;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .sp-details-table tbody td,
+.layout-mobile[data-mobile-theme="dark"] .job-details-table tbody td,
+.layout-mobile[data-mobile-theme="dark"] table tbody td {
+  background-color: #152238;
+  color: #f1f5f9;
+  border-bottom: 1px solid #263a56;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .sp-details-table tbody tr:hover td {
+  background-color: #1b2b45;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .table-label-col {
+  color: #a7b4c8;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .table-val-col {
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .table-val-highlight {
+  color: #f87171 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .vacancy-post-name {
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .vacancy-post-category {
+  color: #a7b4c8;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .vacancy-post-vacancies {
+  color: #4ade80;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .vacancy-post-eligibility {
+  color: #cbd5e1;
+}
+
+/* Age Limit & Relaxation Cards */
+.layout-mobile[data-mobile-theme="dark"] .age-card-item {
+  background-color: #0d1729;
+  border: 1px solid #263a56;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .age-card-label {
+  color: #8190a7;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .age-card-val {
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .age-relaxation-box {
+  background-color: #0d1729;
+  border: 1px solid #263a56;
+  color: #a7b4c8;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .age-relaxation-box strong {
+  color: #f1f5f9;
+}
+
+/* Eligibility Blocks */
+.layout-mobile[data-mobile-theme="dark"] .eligibility-card-block {
+  background-color: #0d1729;
+  border: 1px solid #263a56;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .eligibility-block-title {
+  color: #93c5fd;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .eligibility-block-desc {
+  color: #cbd5e1;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .eligibility-card-block.highlight {
+  background-color: rgba(37, 99, 235, 0.15);
+  border-color: #3b82f6;
+}
+
+/* How to Apply & Steps */
+.layout-mobile[data-mobile-theme="dark"] .application-step-item,
+.layout-mobile[data-mobile-theme="dark"] .application-step-card {
+  background-color: #0d1729;
+  border: 1px solid #263a56;
+  color: #cbd5e1;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .step-number-circle {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+/* Post Detail Sticky Navigation Tabs */
+.layout-mobile[data-mobile-theme="dark"] .details-section-nav-wrapper {
+  background-color: #080f1e;
+  border-bottom: 1px solid #263a56;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .details-section-nav {
+  background-color: #080f1e;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .details-section-btn {
+  background-color: #152238;
+  color: #a7b4c8;
+  border: 1px solid #263a56;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .details-section-btn.active {
+  background-color: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+/* FAQ Accordion on Post Details */
+.layout-mobile[data-mobile-theme="dark"] .job-faq-card,
+.layout-mobile[data-mobile-theme="dark"] .sp-faq-item {
+  background-color: #0d1729;
+  border: 1px solid #263a56;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .job-faq-question-btn,
+.layout-mobile[data-mobile-theme="dark"] .sp-faq-question-btn {
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .job-faq-answer,
+.layout-mobile[data-mobile-theme="dark"] .sp-faq-answer {
+  background-color: #152238;
+  color: #a7b4c8;
+  border-top: 1px solid #263a56;
+}
+
+/* Action Buttons & Sidebar */
+.layout-mobile[data-mobile-theme="dark"] .btn-header-action {
+  background-color: #0d1729;
+  border: 1px solid #263a56;
+  color: #a7b4c8;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .btn-header-action:hover,
+.layout-mobile[data-mobile-theme="dark"] .btn-header-action.active {
+  background-color: #1b2b45;
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .action-secondary-btn {
+  background-color: #0d1729;
+  border: 1px solid #263a56;
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .btn-sidebar-reminder {
+  background-color: #152238;
+  border: 1px solid #263a56;
+  color: #f1f5f9;
+}
+
+/* --------------------------------------------------------------------------
+   4. Search Results Page on Mobile Dark Mode
+   -------------------------------------------------------------------------- */
+.layout-mobile[data-mobile-theme="dark"] .search-results-page-container {
+  background-color: #080f1e;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-hero-bar {
+  background-color: #152238;
+  border: 1px solid #263a56;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-page-title {
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-page-subtitle {
+  color: #a7b4c8;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-type-tab {
+  background-color: #152238;
+  border: 1px solid #263a56;
+  color: #a7b4c8;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-type-tab.active {
+  background-color: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .search-result-card,
+.layout-mobile[data-mobile-theme="dark"] .search-job-card {
+  background-color: #152238;
+  border: 1px solid #263a56;
+  color: #f1f5f9;
+}
+
+/* --------------------------------------------------------------------------
+   5. Saved Jobs Page on Mobile Dark Mode
+   -------------------------------------------------------------------------- */
+.layout-mobile[data-mobile-theme="dark"] .saved-jobs-page-container {
+  background-color: #080f1e;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .saved-jobs-topbar {
+  border-bottom: 1px solid #263a56;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .listing-page-title {
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .listing-page-subtitle {
+  color: #a7b4c8;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .saved-jobs-clear-btn {
+  background-color: #152238;
+  border: 1px solid #263a56;
+  color: #f87171;
+}
+
+/* --------------------------------------------------------------------------
+   6. Authentication / Login Page on Mobile Dark Mode
+   -------------------------------------------------------------------------- */
+.layout-mobile[data-mobile-theme="dark"] .login-page-wrapper {
+  background-color: #080f1e;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .login-card {
+  background-color: #152238;
+  border: 1px solid #263a56;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.layout-mobile[data-mobile-theme="dark"] .login-card-title {
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .login-card-subtitle {
+  color: #a7b4c8;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .form-label {
+  color: #a7b4c8;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .form-input,
+.layout-mobile[data-mobile-theme="dark"] .login-input-field {
+  background-color: #0d1729;
+  border: 1px solid #263a56;
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .form-input:focus,
+.layout-mobile[data-mobile-theme="dark"] .login-input-field:focus {
+  border-color: #3b82f6;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .demo-cred-box {
+  background-color: #0d1729;
+  border: 1px solid #263a56;
+  color: #a7b4c8;
+}
+
+/* --------------------------------------------------------------------------
+   7. Common Empty States & Pagination on Mobile Dark Mode
+   -------------------------------------------------------------------------- */
+.layout-mobile[data-mobile-theme="dark"] .empty-state,
+.layout-mobile[data-mobile-theme="dark"] .empty-state-box {
+  background-color: #152238;
+  border: 1px dashed #263a56;
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .empty-state-title {
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .empty-state-desc {
+  color: #a7b4c8;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .pagination {
+  border-top-color: #263a56;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .pagination-btn,
+.layout-mobile[data-mobile-theme="dark"] .pagination-page-btn {
+  background-color: #152238;
+  border-color: #263a56;
+  color: #f1f5f9;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .pagination-page-btn.active {
+  background-color: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   8. Mobile Footer: Consistent Dark Navy Appearance Across BOTH Mobile Themes
+   (Strictly scoped to .layout-mobile .site-footer; Desktop remains untouched)
+   -------------------------------------------------------------------------- */
+.layout-mobile .site-footer,
+.layout-mobile .site-footer .page-container,
+.layout-mobile .site-footer .mobile-footer-wrapper,
+.layout-mobile .site-footer .mobile-footer-brand,
+.layout-mobile .site-footer .mobile-footer-accordion,
+.layout-mobile .site-footer .mobile-footer-section {
+  background-color: #080f1e !important;
+  color: #a7b4c8 !important;
+}
+
+.layout-mobile .site-footer .page-container {
+  background-color: transparent !important;
+}
+
+.layout-mobile .site-footer {
+  border-top: 3px solid #2563eb !important;
+  padding: 32px 0 20px 0;
+}
+
+.layout-mobile .footer-brand-heading {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile .footer-brand-heading span {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile .footer-brand-icon-box {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+}
+
+.layout-mobile .footer-tagline {
+  color: #facc15 !important;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.layout-mobile .mobile-brand-desc {
+  color: #a7b4c8 !important;
+}
+
+/* Mobile Accordion Navigation */
+.layout-mobile .mobile-footer-accordion {
+  border-top: 1px solid #263a56 !important;
+}
+
+.layout-mobile .mobile-footer-section {
+  border-bottom: 1px solid #263a56 !important;
+}
+
+.layout-mobile .mobile-footer-header-btn {
+  color: #f1f5f9 !important;
+  font-weight: 700;
+  background: none;
+}
+
+.layout-mobile .mobile-footer-header-btn:hover {
+  color: #ffffff !important;
+}
+
+.layout-mobile .mobile-footer-section-title {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile .mobile-footer-chevron {
+  color: #60a5fa !important;
+}
+
+.layout-mobile .mobile-footer-chevron.open {
+  color: #facc15 !important;
+  transform: rotate(180deg);
+}
+
+.layout-mobile .mobile-footer-links-panel {
+  background-color: #0d1729 !important;
+  border: 1px solid #263a56 !important;
+  border-radius: 6px;
+  padding: 8px 12px 14px 12px;
+  margin-bottom: 8px;
+}
+
+.layout-mobile .mobile-footer-link {
+  color: #cbd5e1 !important;
+  min-height: 38px;
+  font-size: 13.5px;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.layout-mobile .mobile-footer-link:hover,
+.layout-mobile .mobile-footer-link:focus-visible {
+  color: #60a5fa !important;
+  transform: translateX(2px);
+}
+
+.layout-mobile .mobile-footer-note {
+  background-color: #152238 !important;
+  border: 1px solid #263a56 !important;
+  border-left: 3px solid #facc15 !important;
+  color: #a7b4c8 !important;
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+/* Important Recruitment Disclaimer Box */
+.layout-mobile .footer-disclaimer-box {
+  background-color: #0d1729 !important;
+  border: 1px solid #263a56 !important;
+  border-radius: 8px;
+  padding: 14px 16px;
+  color: #a7b4c8 !important;
+  font-size: 12px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.layout-mobile .footer-disclaimer-title {
+  color: #facc15 !important;
+  font-weight: 700;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.layout-mobile .footer-disclaimer-title svg {
+  color: #facc15 !important;
+}
+
+/* Footer Bottom Bar */
+.layout-mobile .footer-bottom {
+  border-top: 1px solid #263a56 !important;
+  padding-top: 18px;
+  color: #8190a7 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  text-align: center;
+}
+
+.layout-mobile .footer-bottom-copy {
+  color: #8190a7 !important;
+  font-size: 12px;
+}
+
+.layout-mobile .footer-bottom-links {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.layout-mobile .footer-bottom-link {
+  color: #a7b4c8 !important;
+  font-size: 12.5px;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.layout-mobile .footer-bottom-link:hover,
+.layout-mobile .footer-bottom-link:focus-visible {
+  color: #60a5fa !important;
+}
+
+/* --------------------------------------------------------------------------
+   9. Mobile Drawer Menu in Mobile Dark Mode
+   -------------------------------------------------------------------------- */
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-sheet {
+  background-color: #0d1729 !important;
+  border-right: 1px solid #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-link {
+  color: #f1f5f9 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-link:hover,
+.layout-mobile[data-mobile-theme="dark"] .mobile-drawer-link:active {
+  background-color: #152238 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-cat-pill {
+  background-color: #152238 !important;
+  color: #cbd5e1 !important;
+  border-color: #263a56 !important;
+}
+
+.layout-mobile[data-mobile-theme="dark"] .mobile-cat-pill:hover,
+.layout-mobile[data-mobile-theme="dark"] .mobile-cat-pill.active {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+}
+

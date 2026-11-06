@@ -6,8 +6,11 @@ import { Pagination } from '../components/jobs/Pagination';
 import { EmptyState } from '../components/common/EmptyState';
 import { getScholarships } from '../services/scholarshipService';
 import { formatDate } from '../utils/formatters';
+import { useViewport } from '../hooks/useViewport';
+import { MobileCategoryListingPage } from '../components/category/MobileCategoryListingPage';
 
 export function ScholarshipPage() {
+  const { isMobile } = useViewport(768);
   const [scholarships, setScholarships] = useState([]);
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
@@ -39,6 +42,10 @@ export function ScholarshipPage() {
   }, [search, statusFilter, currentPage]);
 
   const breadcrumbs = [{ label: 'Scholarships', to: '/up-scholarship' }];
+
+  if (isMobile) {
+    return <MobileCategoryListingPage categorySlug="scholarships" />;
+  }
 
   return (
     <div className="page-container main-content scholarship-page-container">

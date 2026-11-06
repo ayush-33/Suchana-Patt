@@ -23,10 +23,13 @@ import {
   Building,
   Landmark,
   ShieldAlert,
-  ChevronRight
+  ChevronRight,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { useBookmarks } from '../../hooks/useBookmarks';
 import { useNotifications } from '../../hooks/useNotifications';
+import { useMobileTheme } from '../../hooks/useTheme';
 
 /**
  * Compact Mobile Header designed specifically for viewports < 768px.
@@ -87,6 +90,7 @@ export function MobileHeader() {
   }, [isMenuOpen, showAlerts]);
 
   const { savedJobsCount } = useBookmarks();
+  const { theme, isDark } = useMobileTheme();
   const {
     notifications,
     unreadCount,
@@ -142,7 +146,7 @@ export function MobileHeader() {
   ];
 
   return (
-    <header className="mobile-header">
+    <header className={`mobile-header ${isDark ? 'dark-mode' : ''}`} data-theme={theme}>
       {/* Top Mobile Bar */}
       <div className="mobile-header-bar">
         {/* Left: Hamburger menu toggle + Logo */}
@@ -171,7 +175,7 @@ export function MobileHeader() {
             </div>
             <div className="mobile-brand-text">
               <span className="mobile-brand-title">Suchana Patt</span>
-              <span className="mobile-brand-tagline">Sarkari Jankari</span>
+              <span className="mobile-brand-tagline">Sarkari Jankari, Ek Jagah</span>
             </div>
           </Link>
         </div>
@@ -381,6 +385,19 @@ export function MobileHeader() {
                     </div>
                     <ChevronRight size={14} className="mobile-drawer-arrow" />
                   </Link>
+
+                  <div
+                    className="mobile-drawer-link"
+                    style={{ cursor: 'default' }}
+                  >
+                    <div className="mobile-drawer-link-left">
+                      {isDark ? <Moon size={17} className="mobile-drawer-icon" /> : <Sun size={17} className="mobile-drawer-icon" />}
+                      <span>Theme: System ({isDark ? 'Dark' : 'Light'})</span>
+                    </div>
+                    <span style={{ fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 4, background: isDark ? '#1e293b' : '#e2e8f0', color: isDark ? '#93c5fd' : '#475569' }}>
+                      Auto
+                    </span>
+                  </div>
                 </nav>
               </div>
             </div>

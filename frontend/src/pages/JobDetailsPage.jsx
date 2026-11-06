@@ -44,7 +44,7 @@ export function JobDetailsPage() {
   const [relatedJobs, setRelatedJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
-  const [openFaqIndex, setOpenFaqIndex] = useState(0);
+  const [openFaqIndex, setOpenFaqIndex] = useState(isMobile ? -1 : 0);
   const [currentTimestamp] = useState(() => Date.now());
 
   const tabsRef = useRef(null);
@@ -111,11 +111,16 @@ export function JobDetailsPage() {
       { id: 'official-links', label: 'Important Links', icon: FileText }
     ];
 
-    list.push({ id: 'faqs', label: 'FAQs', icon: HelpCircle });
-    list.push({ id: 'similar-jobs', label: 'Similar Jobs', icon: Sparkles });
+    if (isMobile) {
+      list.push({ id: 'similar-jobs', label: 'Similar Jobs', icon: Sparkles });
+      list.push({ id: 'faqs', label: 'FAQs', icon: HelpCircle });
+    } else {
+      list.push({ id: 'faqs', label: 'FAQs', icon: HelpCircle });
+      list.push({ id: 'similar-jobs', label: 'Similar Jobs', icon: Sparkles });
+    }
 
     return list;
-  }, [job]);
+  }, [job, isMobile]);
 
   // Deadline countdown calculation
   const deadlineInfo = useMemo(() => {
@@ -193,10 +198,16 @@ export function JobDetailsPage() {
 
     const activeBtn = el.querySelector(`.section-tab-btn[data-tab-id="${activeTab}"]`);
     if (activeBtn) {
-      const containerRect = el.getBoundingClientRect();
-      const btnRect = activeBtn.getBoundingClientRect();
-      if (btnRect.left < containerRect.left || btnRect.right > containerRect.right) {
-        activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+      // Horizontal container-only scroll: el.scrollTo prevents window from jumping vertically to top
+      const btnLeft = activeBtn.offsetLeft;
+      const btnRight = btnLeft + activeBtn.offsetWidth;
+      const scrollLeft = el.scrollLeft;
+      const clientWidth = el.clientWidth;
+
+      if (btnLeft < scrollLeft) {
+        el.scrollTo({ left: btnLeft - 8, behavior: 'smooth' });
+      } else if (btnRight > scrollLeft + clientWidth) {
+        el.scrollTo({ left: btnRight - clientWidth + 8, behavior: 'smooth' });
       }
     }
     setTimeout(checkScrollBounds, 300);
@@ -1173,9 +1184,6 @@ export function JobDetailsPage() {
           {/* 12. Official Links Table */}
           {renderOfficialLinks()}
 
-          {/* 13. FAQs */}
-          {renderFaqs()}
-
           {/* 14. Related Recruitment Posts */}
           {renderRelatedNotifications()}
 
@@ -1213,8 +1221,11 @@ export function JobDetailsPage() {
         </div>
       )}
 
-      {/* Full-Width Similar Recommendations (Bottom) */}
+      {/* Full-Width Similar Recommendations */}
       {renderSimilarJobs()}
+
+      {/* Mobile FAQ Section: Positioned immediately BELOW Similar Posts and BEFORE Footer */}
+      {isMobile && renderFaqs()}
     </div>
   );
 }
